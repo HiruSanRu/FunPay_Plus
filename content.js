@@ -509,17 +509,31 @@
       markBlacklisted(); addBuyerNotes(); renderBlacklist(); markSelfNames();
     });
     // Пока открыта страница Plus, обновляем «следующее поднятие через …»
-    setInterval(() => { if (document.getElementById('fpp-dash')) renderRaise(); }, 30000);
+    every(() => { if (document.getElementById('fpp-dash')) renderRaise(); }, 30000);
     // FunPay подгружает чаты динамически — следим за DOM
-    new MutationObserver(debounce(() => {
+    const mo = new MutationObserver(debounce(() => {
+      if (!alive()) { mo.disconnect(); return; }
       injectTemplates(); addOrderCopyButtons(); addBuyerNotes(); highlightUnread();
       addTranslateButton(); addCharCounters(); addSbpPrice(); addNavButton(); markBlacklisted();
       detectMe(); markSelfNames(); markOrderStatus(); renderSalesStats(); addOfferToggles(); addOfferCopy(); addMassToggle();
       addNetPrices(); addSectionFee(); addLotsExportImport(); addEmojiPanel(); markSupporters();
-    }, 400)).observe(document.body, { childList: true, subtree: true });
+    }, 400));
+    mo.observe(document.body, { childList: true, subtree: true });
   }
 
   function debounce(fn, ms) { let t; return () => { clearTimeout(t); t = setTimeout(fn, ms); }; }
+
+  // После обновления или отключения расширения старый скрипт остаётся на открытой вкладке,
+  // но любой вызов chrome.* бросает «Extension context invalidated». Таймеры такого скрипта
+  // останавливаем, а саму ошибку глушим: вкладку достаточно обновить
+  function alive() { try { return !!chrome.runtime?.id; } catch (e) { return false; } }
+  function every(fn, ms) {
+    const id = setInterval(() => { if (!alive()) { clearInterval(id); return; } fn(); }, ms);
+    return id;
+  }
+  const isInvalidated = (e) => /Extension context invalidated/i.test(String(e?.message || e || ''));
+  addEventListener('error', (e) => { if (isInvalidated(e.error || e.message)) e.preventDefault(); });
+  addEventListener('unhandledrejection', (e) => { if (isInvalidated(e.reason)) e.preventDefault(); });
 
   /* ---------- Свой звук уведомлений ---------- */
   let lastUnread = -1;
@@ -563,7 +577,7 @@
   // Браузер может снова «усыпить» звук, поэтому размораживаем при каждом действии
   for (const ev of ['pointerdown', 'keydown']) addEventListener(ev, () => FPP_SOUNDS.unlock(), { capture: true, passive: true });
   // FunPay обновляет счётчик и без изменений DOM чата; проверяем ещё и по таймеру
-  setInterval(() => { if (document.body) highlightUnread(); }, 3000);
+  every(() => { if (document.body) highlightUnread(); }, 3000);
 
   /* ---------- Автоперевод лота RU → EN ---------- */
   function translate(text) {
