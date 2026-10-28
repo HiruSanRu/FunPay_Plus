@@ -1532,7 +1532,7 @@
               <select id="fd-profileCover">${opts([['site', 'Как на FunPay'], ['hide', 'Убрать'], ['custom', 'Свой файл']])}</select>
               <label for="fd-coverFile">Картинка, GIF или видео</label>
               <input type="file" id="fd-coverFile" accept="image/*,video/*">
-              <p class="fpp-muted">Рекомендуемый размер: 3200×1200 (минимум 1600×600), соотношение 8:3. Баннер растягивается по ширине и прижимается к низу: видны в основном нижние 500 px, важное держите внизу по центру. <a href="https://github.com/HiruSanRu/FunPay_Plus/blob/main/docs/banner-template.svg" target="_blank" rel="noopener">Шаблон</a>. Видео: MP4 или WebM до 1080p, короткий цикл без звука.</p>
+              <p class="fpp-muted"><a href="https://github.com/HiruSanRu/FunPay_Plus/blob/main/docs/banner-template.png" target="_blank" rel="noopener">Шаблон баннера</a></p>
               <div id="fd-coverHint" class="fpp-sbp-hint" aria-live="polite"></div>
             </section>
 
