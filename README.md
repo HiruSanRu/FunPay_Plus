@@ -4,7 +4,7 @@
 
 **Тёмная тема, живые обои и инструменты продавца для [funpay.com](https://funpay.com)**
 
-![Version](https://img.shields.io/badge/version-1.3.0-8a5cf6)
+![Version](https://img.shields.io/badge/version-1.3.1-8a5cf6)
 ![Manifest](https://img.shields.io/badge/Manifest-V3-4285F4?logo=googlechrome&logoColor=white)
 ![Browsers](https://img.shields.io/badge/Chrome%20·%20Edge%20·%20Яндекс%20·%20Opera-supported-success)
 
