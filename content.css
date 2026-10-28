@@ -200,6 +200,18 @@ html.fpp-dark [class*="rating"] .fa-star, html.fpp-dark [class*="rating"] i {
 html.fpp-dark .rating-full, html.fpp-dark .rating-stars, html.fpp-dark .review-item-rating {
   filter: drop-shadow(0 0 4px rgba(255, 200, 60, .55));
 }
+/* Оценка 3 звезды и ниже — красная */
+html.fpp-dark [class*="rating"]:is(.rating1, .rating2, .rating3, .rating-1, .rating-2, .rating-3),
+html.fpp-dark [class*="rating"]:is(.rating1, .rating2, .rating3, .rating-1, .rating-2, .rating-3) *,
+html.fpp-dark .review-item-rating:has(.rating1, .rating2, .rating3, .rating-1, .rating-2, .rating-3),
+html.fpp-dark .review-item-rating:has(.rating1, .rating2, .rating3, .rating-1, .rating-2, .rating-3) * {
+  color: #ff4d4f !important;
+  text-shadow: 0 0 6px rgba(255, 77, 79, .55), 0 0 18px rgba(255, 40, 40, .35) !important;
+}
+html.fpp-dark .review-item-rating:has(.rating1, .rating2, .rating3, .rating-1, .rating-2, .rating-3),
+html.fpp-dark .rating-stars:is(.rating1, .rating2, .rating3, .rating-1, .rating-2, .rating-3) {
+  filter: drop-shadow(0 0 4px rgba(255, 60, 60, .6)) hue-rotate(-45deg) saturate(1.6);
+}
 /* Полоски распределения оценок */
 html.fpp-dark .rating-full-count .rating-progress,
 html.fpp-dark .rating-full-count .progress { background: rgba(255, 255, 255, .08) !important; }
@@ -1055,3 +1067,16 @@ input[type="file"][id^="fd-"][hidden] { display: none !important; }
 .fpp-card input[type=color]::-webkit-color-swatch { border: none; border-radius: 7px; }
 .fpp-card input[type=color]:focus-visible { outline: 2px solid var(--fpp-a2); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .fpp-pal { transition: none; } }
+
+/* Значок поддержавших проект */
+.fpp-sup-badge {
+  display: inline-block; margin-left: 4px; padding: 0; border: 0; background: none;
+  font-size: 1em; line-height: 1; vertical-align: baseline; cursor: pointer;
+  color: #ffd166; text-shadow: 0 0 6px rgba(255, 209, 102, .7);
+}
+.fpp-sup-badge:hover, .fpp-sup-badge:focus-visible { color: #fff2c2; outline: none; }
+.fpp-sup-pop {
+  position: absolute; z-index: 100000; max-width: 300px; padding: 10px 12px;
+  border-radius: 10px; background: #1e1f2b; color: #f1f1f5; font-size: 13px; line-height: 1.4;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .35); border: 1px solid rgba(255, 209, 102, .4);
+}

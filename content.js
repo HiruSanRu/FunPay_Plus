@@ -500,6 +500,7 @@
     addEventListener('hashchange', route);
     detectMe();
     markOrderStatus();
+    markSupporters(); loadSupporters();
     chrome.storage.local.get({ blacklist: {}, meName: '', meId: '' }, (v) => {
       S.blacklist = v.blacklist;
       // ник из прошлой сессии: нужен, пока шапка сайта ещё не отрисована
@@ -514,7 +515,7 @@
       injectTemplates(); addOrderCopyButtons(); addBuyerNotes(); highlightUnread();
       addTranslateButton(); addCharCounters(); addSbpPrice(); addNavButton(); markBlacklisted();
       detectMe(); markSelfNames(); markOrderStatus(); renderSalesStats(); addOfferToggles(); addOfferCopy(); addMassToggle();
-      addNetPrices(); addSectionFee(); addLotsExportImport(); addEmojiPanel();
+      addNetPrices(); addSectionFee(); addLotsExportImport(); addEmojiPanel(); markSupporters();
     }, 400)).observe(document.body, { childList: true, subtree: true });
   }
 
@@ -1421,6 +1422,8 @@
             <span class="fpp-ico">🎨</span>Кастомизация</button>
           <button type="button" class="fpp-tab" data-tab="mods" role="tab" aria-selected="false">
             <span class="fpp-ico">🧩</span>Модификации</button>
+          <button type="button" class="fpp-tab" data-tab="support" role="tab" aria-selected="false">
+            <span class="fpp-ico">💖</span>Поддержка проекта</button>
         </nav>
 
         <div class="fpp-panels">
@@ -1586,11 +1589,41 @@
               <div id="fd-blacklist"></div>
             </section>
           </div>
+
+          <div class="fpp-grid fpp-panel" data-panel="support" role="tabpanel" hidden>
+            <section class="fpp-card">
+              <h2><span class="fpp-ico">💖</span>Поддержка проекта</h2>
+              <p class="fpp-muted">FunPay Plus развивается на поддержку пользователей. Оформите подписку «Минимальная поддержка проекта» на Boosty и получите уникальный значок <span class="fpp-sup-badge" aria-hidden="true">✦</span> рядом с вашим ником.</p>
+              <div class="fpp-actions">
+                <a class="fpp-btn fpp-primary" href="https://boosty.to/funpayplus" target="_blank" rel="noopener">Поддержать на Boosty</a>
+              </div>
+            </section>
+
+            <section class="fpp-card">
+              <details id="fd-supAdmin">
+                <summary>🔧 Для разработчика</summary>
+                <p class="fpp-muted">Ники сохраняются в supporters.json на GitHub. У всех пользователей значок появится в течение часа.</p>
+                <label for="fd-ghToken">GitHub-токен (доступ Contents: Read and write к FunPay_Plus)</label>
+                <div class="fpp-row">
+                  <input type="password" id="fd-ghToken" class="fpp-input" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
+                  <button type="button" class="fpp-btn" id="fd-ghTokenSave">Сохранить токен</button>
+                </div>
+                <label for="fd-supNick">Добавить ник</label>
+                <div class="fpp-row">
+                  <input type="text" id="fd-supNick" class="fpp-input" autocomplete="off" spellcheck="false" placeholder="Ник на FunPay">
+                  <button type="button" class="fpp-btn fpp-primary" id="fd-supAdd">Добавить</button>
+                </div>
+                <p class="fpp-muted" id="fd-supStatus" role="status"></p>
+                <div id="fd-supList" class="fpp-sup-list"></div>
+              </details>
+            </section>
+          </div>
         </div>
       </div>`;
     bindDashboard(d);
     bindGoldenKey(d);
     bindDashTabs(d);
+    bindSupportAdmin(d);
     return d;
   }
 
@@ -1818,6 +1851,7 @@
       const local = await chrome.storage.local.get(null);
       delete local.raise; // состояние поднятия не переносим
       delete local.gcloudKey; // ключ API в файл не кладём: файлом могут поделиться
+      delete local.ghToken;
       const blob = new Blob([JSON.stringify({ app: 'funpay-plus', v: 1, sync, local }, null, 2)], { type: 'application/json' });
       const a = Object.assign(document.createElement('a'), {
         href: URL.createObjectURL(blob), download: `funpay-plus-${new Date().toISOString().slice(0, 10)}.json`
@@ -2635,6 +2669,179 @@
       const n = el.querySelector('.media-user-name')?.textContent.trim();
       el.classList.toggle('fpp-bl-contact', !!(n && bl[n]));
     });
+  }
+
+  /* =================== ЗНАЧКИ ПОДДЕРЖАВШИХ =================== */
+  // Ники подписчиков Boosty «Минимальная поддержка проекта». Boosty не отдаёт список
+  // подписчиков без авторизации, поэтому список лежит в supporters.json и подгружается
+  // по SUPPORTERS_URL: новые ники появляются у всех без обновления расширения.
+  // Встроенный список — запасной, на случай если файл недоступен.
+  const SUPPORTERS_URL = 'https://raw.githubusercontent.com/HiruSanRu/FunPay_Plus/main/supporters.json';
+  const SUPPORTERS_TTL = 60 * 60 * 1000;
+  let SUPPORTERS = new Set(['texas78765', 'DeimosShops', 'Chilbot12'].map((n) => n.toLowerCase()));
+
+  function setSupporters(list) {
+    if (!Array.isArray(list)) return;
+    SUPPORTERS = new Set(list.filter((n) => typeof n === 'string' && n.trim()).map((n) => n.trim().toLowerCase()));
+    markSupporters();
+  }
+
+  function loadSupporters() {
+    chrome.storage.local.get({ supporters: null, supportersAt: 0 }, async (v) => {
+      if (v.supporters) setSupporters(v.supporters);
+      if (Date.now() - v.supportersAt < SUPPORTERS_TTL) return;
+      try {
+        const r = await fetch(SUPPORTERS_URL, { cache: 'no-cache' });
+        if (!r.ok) return;
+        const list = (await r.json()).supporters;
+        if (!Array.isArray(list)) return;
+        chrome.storage.local.set({ supporters: list, supportersAt: Date.now() });
+        setSupporters(list);
+      } catch (e) {}
+    });
+  }
+
+  // Правка supporters.json через GitHub API: токен хранится только в этом браузере
+  const GH_FILE = 'https://api.github.com/repos/HiruSanRu/FunPay_Plus/contents/supporters.json';
+  const b64enc = (s) => btoa(unescape(encodeURIComponent(s)));
+  const b64dec = (s) => decodeURIComponent(escape(atob(s.replace(/\s/g, ''))));
+
+  async function ghSupporters(token) {
+    const r = await fetch(GH_FILE + '?ref=main', {
+      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' }, cache: 'no-store',
+    });
+    if (r.status === 404) return { list: [], sha: null };
+    if (!r.ok) throw new Error(r.status === 401 ? 'Неверный токен' : `GitHub: ошибка ${r.status}`);
+    const j = await r.json();
+    return { list: JSON.parse(b64dec(j.content)).supporters || [], sha: j.sha };
+  }
+
+  async function ghSaveSupporters(token, list, sha, msg) {
+    const r = await fetch(GH_FILE, {
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: msg, branch: 'main', ...(sha ? { sha } : {}),
+        content: b64enc(JSON.stringify({ supporters: list }, null, 2) + '\n'),
+      }),
+    });
+    if (r.status === 409) throw new Error('Файл изменился, попробуйте ещё раз');
+    if (!r.ok) throw new Error(r.status === 403 || r.status === 404 ? 'У токена нет прав на запись' : `GitHub: ошибка ${r.status}`);
+  }
+
+  function bindSupportAdmin(d) {
+    const $ = (id) => d.querySelector('#fd-' + id);
+    const status = (t) => { $('supStatus').textContent = t; };
+    let token = '';
+
+    const render = (list) => {
+      const box = $('supList');
+      box.replaceChildren(...list.map((n) => {
+        const row = document.createElement('div');
+        row.className = 'fpp-row';
+        const s = document.createElement('span');
+        s.textContent = n;
+        const del = document.createElement('button');
+        del.type = 'button'; del.className = 'fpp-btn'; del.textContent = '✕';
+        del.setAttribute('aria-label', `Удалить ${n}`);
+        del.onclick = () => change((l) => l.filter((x) => x.toLowerCase() !== n.toLowerCase()), `Удалён ${n}`);
+        row.append(s, del);
+        return row;
+      }));
+    };
+
+    const apply = (list) => {
+      chrome.storage.local.set({ supporters: list, supportersAt: Date.now() });
+      setSupporters(list);
+      render(list);
+    };
+
+    const refresh = async () => {
+      if (!token) { status('Сохраните токен, чтобы управлять списком'); return; }
+      status('Загрузка…');
+      try { const { list } = await ghSupporters(token); render(list); status(`В списке: ${list.length}`); }
+      catch (e) { status(e.message); }
+    };
+
+    // читаем свежий файл, меняем и сохраняем — так не затрём чужие правки
+    const change = async (fn, msg) => {
+      if (!token) { status('Сначала сохраните токен'); return; }
+      status('Сохранение…');
+      try {
+        const { list, sha } = await ghSupporters(token);
+        const next = fn(list);
+        await ghSaveSupporters(token, next, sha, msg);
+        apply(next);
+        status(`${msg}. В списке: ${next.length}`);
+      } catch (e) { status(e.message); }
+    };
+
+    const add = () => {
+      const nick = $('supNick').value.trim();
+      if (!nick) { $('supNick').focus(); return; }
+      change((l) => (l.some((x) => x.toLowerCase() === nick.toLowerCase()) ? l : [...l, nick]), `Добавлен ${nick}`)
+        .then(() => { $('supNick').value = ''; });
+    };
+
+    $('supAdd').onclick = add;
+    $('supNick').onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); add(); } };
+    $('ghTokenSave').onclick = () => {
+      const t = $('ghToken').value.trim();
+      if (!t) { $('ghToken').focus(); return; }
+      chrome.storage.local.set({ ghToken: t }, () => { token = t; $('ghToken').value = ''; refresh(); });
+    };
+    chrome.storage.local.get({ ghToken: '' }, (v) => {
+      token = v.ghToken;
+      $('ghToken').placeholder = token ? 'Токен сохранён. Вставьте новый, чтобы заменить' : 'github_pat_…';
+      $('supAdmin').addEventListener('toggle', () => { if ($('supAdmin').open) refresh(); }, { once: true });
+    });
+  }
+
+  function markSupporters() {
+    if (!SUPPORTERS.size) return;
+    // .profile-header h1 / .mr4 — ник на странице пользователя /users/ID/
+    const SEL = '.media-user-name, .chat-msg-author-link, a[href*="/users/"], .profile-header h1 .mr4, .profile-header h1 > span:first-child, .profile-header h1';
+    document.querySelectorAll(SEL).forEach((el) => {
+      if (el.dataset.fppSup || el.closest('.fpp-sup-badge, #fpp-dash, .navbar')) return;
+      // берём только собственный текст, без бейджей/счётчиков рядом с ником
+      const own = [...el.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join('').trim();
+      const nick = own || (el.textContent || '').trim();
+      if (!nick || !SUPPORTERS.has(nick.toLowerCase())) return;
+      // вложенные совпадения (ссылка внутри .media-user-name) — значок только один раз
+      if (el.querySelector('[data-fpp-sup]') || el.parentElement?.closest('[data-fpp-sup]')) return;
+      el.dataset.fppSup = '1';
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'fpp-sup-badge';
+      b.textContent = '✦';
+      b.title = 'Поддержал(а) разработку FunPay Plus';
+      b.setAttribute('aria-label', b.title);
+      b.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); showSupporterPopup(b, nick); });
+      // внутрь элемента с ником: значок остаётся на той же строке справа, даже если ник — блок
+      el.append(b);
+    });
+  }
+
+  function showSupporterPopup(anchor, nick) {
+    document.querySelector('.fpp-sup-pop')?.remove();
+    const p = document.createElement('div');
+    p.className = 'fpp-sup-pop';
+    p.setAttribute('role', 'dialog');
+    const b = document.createElement('b');
+    b.textContent = nick;
+    p.append(b, ' поддержал(а) разработку FunPayPlus и получил(а) уникальный значок.');
+    document.body.append(p);
+    const r = anchor.getBoundingClientRect();
+    p.style.top = `${r.bottom + scrollY + 6}px`;
+    p.style.left = `${Math.max(8, Math.min(r.left + scrollX, scrollX + innerWidth - p.offsetWidth - 8))}px`;
+    const close = (e) => {
+      if (e.type === 'keydown' && e.key !== 'Escape') return;
+      if (e.type === 'click' && p.contains(e.target)) return;
+      p.remove();
+      document.removeEventListener('click', close, true);
+      document.removeEventListener('keydown', close);
+    };
+    setTimeout(() => { document.addEventListener('click', close, true); document.addEventListener('keydown', close); });
   }
 
   // Цвет строки заказа по статусу: «Оплачен» ждёт действий, «Возврат» — деньги вернули.
