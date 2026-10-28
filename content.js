@@ -1532,7 +1532,8 @@
               <select id="fd-profileCover">${opts([['site', 'Как на FunPay'], ['hide', 'Убрать'], ['custom', 'Свой файл']])}</select>
               <label for="fd-coverFile">Картинка, GIF или видео</label>
               <input type="file" id="fd-coverFile" accept="image/*,video/*">
-              <p class="fpp-muted"><a href="https://github.com/HiruSanRu/FunPay_Plus/blob/main/docs/banner-template.png" target="_blank" rel="noopener">Шаблон баннера</a></p>
+              <p class="fpp-muted"><a href="https://github.com/HiruSanRu/FunPay_Plus/blob/main/docs/banner-template.png" target="_blank" rel="noopener">Шаблон баннера</a> · Примеры: ${[1, 2, 3, 4, 5].map((n) =>
+                `<a href="https://github.com/HiruSanRu/FunPay_Plus/blob/main/docs/banner-example${n}.webp" target="_blank" rel="noopener">${n}</a>`).join(' ')}</p>
               <div id="fd-coverHint" class="fpp-sbp-hint" aria-live="polite"></div>
             </section>
 
