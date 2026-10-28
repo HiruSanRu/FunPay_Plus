@@ -1,0 +1,1057 @@
+/* ===== Цветовая палитра =====
+   Значения по умолчанию — фиолетовая палитра. Выбранную content.js ставит инлайном на <html>
+   (FPP_PALETTE.apply, см. palette.js), поэтому она перекрывает эти значения. */
+:root {
+  --fpp-a: #8b6dff; --fpp-a-rgb: 139, 109, 255;
+  --fpp-a-deep: #7d5bff; --fpp-a-deep-rgb: 125, 91, 255;
+  --fpp-a2: #4fc3ff; --fpp-a2-rgb: 79, 195, 255;
+  --fpp-a-mid: #6494ff; --fpp-a-light: #b4a0ff; --fpp-a-soft: #cbbdff; --fpp-a-soft-rgb: 203, 189, 255;
+  --fpp-a-dim: #745bd4;
+  --fpp-s1-rgb: 19, 17, 32; --fpp-s2: #1c1831; --fpp-s2-rgb: 28, 24, 49;
+  --fpp-s3: #272146; --fpp-s3-rgb: 39, 33, 70; --fpp-s4: #392e67;
+  --fpp-on-a: #fff; --fpp-on-g: #fff;  /* текст на заливке акцентом и на градиенте */
+}
+
+/* ===== Тёмная тема (включается классом на <html>) ===== */
+html.fpp-dark {
+  --fpp-bg: rgba(14, 14, 22, 0.78);
+  --fpp-card: rgba(24, 24, 36, 0.82);
+  --fpp-border: rgba(255, 255, 255, 0.08);
+  --fpp-text: #e6e6f0;
+  --fpp-muted: #9a9ab0;
+  --fpp-accent: var(--fpp-a);
+  color-scheme: dark;
+}
+html.fpp-dark body { background: #0b0b12 !important; color: var(--fpp-text) !important; }
+html.fpp-dark body, html.fpp-dark .wrapper, html.fpp-dark .content { background-color: transparent !important; }
+
+/* Сплошные фоны FunPay делаем прозрачными, чтобы обои просвечивали без серых/белых плашек */
+html.fpp-dark .bg-light-color, html.fpp-dark .bg-light, html.fpp-dark #content-body, html.fpp-dark #content,
+html.fpp-dark .wrapper-content, html.fpp-dark .profile-header, html.fpp-dark .profile-cover,
+html.fpp-dark .profile-cover-container, html.fpp-dark .profile-cover::before, html.fpp-dark .profile-cover::after,
+html.fpp-dark .profile, html.fpp-dark .profile-header::before, html.fpp-dark .profile-header::after,
+html.fpp-dark .search-fade, html.fpp-dark .container, html.fpp-dark .container-fluid,
+html.fpp-dark .nav-container, html.fpp-dark .navbar-collapse, html.fpp-dark .navbar-header,
+html.fpp-dark .table, html.fpp-dark .tc, html.fpp-dark .chat-message-list, html.fpp-dark .chat-form,
+html.fpp-dark .mb20, html.fpp-dark .offer, html.fpp-dark .offer-list-title-container {
+  background: transparent !important; border-color: transparent !important; box-shadow: none !important;
+}
+
+/* Шапка: единая стеклянная полоса во всю ширину */
+html.fpp-dark #header, html.fpp-dark .navbar, html.fpp-dark .navbar-default {
+  background: transparent !important; border: none !important; box-shadow: none !important;
+}
+html.fpp-dark #header {
+  background: rgba(10, 10, 18, 0.55) !important; backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--fpp-border) !important;
+}
+html.fpp-dark .wrapper-footer, html.fpp-dark footer {
+  background: rgba(10, 10, 18, 0.6) !important; backdrop-filter: blur(14px); border-color: var(--fpp-border) !important;
+}
+
+/* Карточки: только настоящие контентные блоки, стекло со скруглением */
+/* Плитки игр на главной: без рамок, только мягкая подсветка при наведении */
+html.fpp-dark .content-with-cd, html.fpp-dark .promo-game-list, html.fpp-dark .promo-games,
+html.fpp-dark .promo-game-item, html.fpp-dark .promo-game-item * {
+  background: transparent !important; border: none !important; box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+/* При наведении без фона: только мягко подсвечиваем название игры */
+html.fpp-dark .promo-game-item .game-title, html.fpp-dark .promo-game-item .game-title a {
+  transition: color .15s, text-shadow .15s;
+}
+html.fpp-dark .promo-game-item:hover .game-title, html.fpp-dark .promo-game-item:hover .game-title a {
+  color: #fff !important; text-shadow: 0 0 10px rgba(var(--fpp-a-rgb), .7);
+}
+
+/* Страница чата: убираем белые колонки и рамки */
+html.fpp-dark .chat-full-container, html.fpp-dark .chat-full, html.fpp-dark .chat-contacts,
+html.fpp-dark .chat-full-header, html.fpp-dark .contact-list, html.fpp-dark .chat-detail,
+html.fpp-dark .chat-detail *, html.fpp-dark .chat-float, html.fpp-dark .chat-empty,
+html.fpp-dark .chat-full .chat, html.fpp-dark .js-chat-top {
+  background: transparent !important; border-color: transparent !important; box-shadow: none !important;
+}
+html.fpp-dark .chat-full {
+  background: rgba(12, 12, 22, 0.6) !important; backdrop-filter: blur(12px);
+  border: 1px solid var(--fpp-border) !important; border-radius: 16px !important; overflow: hidden;
+}
+html.fpp-dark .chat-contacts, html.fpp-dark .chat-detail { border: none !important; }
+html.fpp-dark .chat-message-container, html.fpp-dark .chat-header, html.fpp-dark .chat-form,
+html.fpp-dark .chat-message-list, html.fpp-dark .chat-not-selected .chat-message-container {
+  border: none !important; background: transparent !important;
+}
+html.fpp-dark .chat-header { border-bottom: 1px solid var(--fpp-border) !important; }
+html.fpp-dark .chat-form { border-top: 1px solid var(--fpp-border) !important; }
+html.fpp-dark .chat-contacts { border-right: 1px solid var(--fpp-border) !important; }
+html.fpp-dark .chat-detail { border-left: 1px solid var(--fpp-border) !important; }
+html.fpp-dark .chat-full-header, html.fpp-dark .chat-full-header * { color: var(--fpp-text) !important; }
+html.fpp-dark .contact-item.active, html.fpp-dark .contact-item:hover { background: rgba(var(--fpp-a-rgb), 0.14) !important; }
+
+/* Выпадающие меню и навигация: без белого hover, текст всегда читается */
+html.fpp-dark .dropdown-menu {
+  background: rgba(16, 16, 28, 0.95) !important; backdrop-filter: blur(14px);
+  border: 1px solid var(--fpp-border) !important; border-radius: 12px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .5) !important; padding: 6px !important; overflow: hidden;
+}
+html.fpp-dark .dropdown-menu > li + li, html.fpp-dark .dropdown-menu .dropdown-menu > li,
+html.fpp-dark .dropdown-menu .divider {
+  border-top: none !important; background: transparent !important;
+}
+html.fpp-dark .dropdown-menu > li > a, html.fpp-dark .dropdown-menu a,
+html.fpp-dark .user-link-name, html.fpp-dark .user-link-desc {
+  color: var(--fpp-text) !important; background: transparent !important; border-radius: 8px;
+}
+html.fpp-dark .user-link-desc { color: var(--fpp-muted) !important; }
+html.fpp-dark .dropdown-menu > li > a:hover, html.fpp-dark .dropdown-menu > li > a:focus,
+html.fpp-dark .dropdown-menu > .active > a, html.fpp-dark .dropdown-menu > .active > a:hover,
+html.fpp-dark .dropdown-menu > .active > a:focus, html.fpp-dark .dropdown-menu a:hover,
+html.fpp-dark .dropdown-menu a:focus {
+  background: rgba(var(--fpp-a-rgb), 0.18) !important; color: #fff !important;
+}
+/* Пункты шапки: без плашки, светящийся текст и градиентное подчёркивание */
+html.fpp-dark .navbar-default .navbar-nav > li > a,
+html.fpp-dark .navbar-default .navbar-nav > li > a:hover, html.fpp-dark .navbar-default .navbar-nav > li > a:focus,
+html.fpp-dark .navbar-default .navbar-nav > .open > a, html.fpp-dark .navbar-default .navbar-nav > .open > a:hover,
+html.fpp-dark .navbar-default .navbar-nav > .open > a:focus, html.fpp-dark .navbar-default .navbar-nav > .active > a,
+html.fpp-dark .navbar-default .navbar-nav > .active > a:hover, html.fpp-dark .navbar-default .navbar-nav > .active > a:focus {
+  background: transparent !important; box-shadow: none !important; outline: none !important;
+}
+html.fpp-dark .navbar-default .navbar-nav > li > a {
+  position: relative; color: #d6d6e6 !important; transition: color .2s, text-shadow .2s;
+}
+html.fpp-dark .navbar-default .navbar-nav > li > a::after {
+  content: ''; position: absolute; left: 50%; right: 50%; bottom: 8px; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--fpp-a), var(--fpp-a2)); opacity: 0;
+  transition: left .25s ease, right .25s ease, opacity .25s ease;
+}
+html.fpp-dark .navbar-default .navbar-nav > li > a:hover,
+html.fpp-dark .navbar-default .navbar-nav > .open > a {
+  color: #fff !important; text-shadow: 0 0 10px rgba(var(--fpp-a-rgb), .6);
+}
+html.fpp-dark .navbar-default .navbar-nav > li > a:hover::after,
+html.fpp-dark .navbar-default .navbar-nav > .open > a::after { left: 30%; right: 30%; opacity: .7; }
+html.fpp-dark .navbar-default .navbar-nav > .active > a {
+  color: #fff !important; text-shadow: 0 0 12px rgba(var(--fpp-a-rgb), .8);
+}
+html.fpp-dark .navbar-default .navbar-nav > .active > a::after {
+  left: 15px; right: 15px; opacity: 1; box-shadow: 0 0 8px rgba(var(--fpp-a-rgb), .8);
+}
+html.fpp-dark .navbar-default .navbar-nav > li > a:focus-visible {
+  outline: 2px solid rgba(var(--fpp-a-rgb), .7) !important; outline-offset: -4px; border-radius: 8px;
+}
+/* Аватар без подчёркивания */
+html.fpp-dark .navbar-default .navbar-nav > li > a.user-link::after { display: none; }
+
+/* Счётчики и бейджи в шапке (Продажи 7, Финансы 1501 ₽) */
+html.fpp-dark .navbar .badge, html.fpp-dark .navbar-nav .badge {
+  background: linear-gradient(135deg, var(--fpp-a-deep), var(--fpp-a2)) !important; color: var(--fpp-on-g) !important;
+  border: none !important; border-radius: 999px !important; font-weight: 700;
+  box-shadow: 0 0 10px rgba(var(--fpp-a-deep-rgb), .5); text-shadow: none;
+}
+
+/* Кнопки и вкладки: состояния hover/active/focus в тёмных тонах */
+html.fpp-dark .btn-default:hover, html.fpp-dark .btn-default:focus, html.fpp-dark .btn-default:active,
+html.fpp-dark .btn-default.active, html.fpp-dark .open > .dropdown-toggle.btn-default,
+html.fpp-dark .btn-gray:hover, html.fpp-dark .btn-white:hover, html.fpp-dark .chat-header .btn:hover {
+  background: rgba(var(--fpp-a-rgb), 0.22) !important; color: #fff !important; border-color: rgba(var(--fpp-a-rgb), .4) !important;
+}
+html.fpp-dark .nav-tabs > li > a:hover, html.fpp-dark .nav-tabs > li.active > a,
+html.fpp-dark .nav-tabs > li.active > a:hover, html.fpp-dark .nav-tabs > li.active > a:focus,
+html.fpp-dark .nav-pills > li > a:hover, html.fpp-dark .nav-pills > li.active > a,
+html.fpp-dark .list-group-item:hover, html.fpp-dark .list-group-item.active,
+html.fpp-dark .pagination > li > a:hover, html.fpp-dark .pagination > .active > a {
+  background: rgba(var(--fpp-a-rgb), 0.18) !important; color: #fff !important; border-color: rgba(var(--fpp-a-rgb), .3) !important;
+}
+html.fpp-dark .nav-tabs { border-color: var(--fpp-border) !important; }
+html.fpp-dark .nav-tabs > li > a, html.fpp-dark .pagination > li > a {
+  background: transparent !important; color: var(--fpp-text) !important; border-color: transparent !important;
+}
+
+/* Отзывы: ответ продавца на тёмном фоне с акцентной полосой */
+html.fpp-dark .review-item-answer, html.fpp-dark .review-compiled-reply {
+  background: rgba(var(--fpp-a-rgb), 0.08) !important; color: var(--fpp-text) !important;
+  border: none !important; border-left: 3px solid rgba(var(--fpp-a-rgb), 0.6) !important;
+  border-radius: 10px !important; box-shadow: none !important;
+}
+html.fpp-dark .review-item-answer *, html.fpp-dark .review-item-text,
+html.fpp-dark .review-item-detail, html.fpp-dark .review-item-date { color: var(--fpp-text) !important; background: transparent !important; }
+html.fpp-dark .review-item-row .h5 { color: var(--fpp-muted) !important; }
+html.fpp-dark .review-container, html.fpp-dark .review-item, html.fpp-dark .dyn-table,
+html.fpp-dark .dyn-table-body { background: transparent !important; border-color: var(--fpp-border) !important; }
+
+/* Рейтинг: тёплое жёлтое свечение у цифры и звёзд */
+html.fpp-dark {
+  --fpp-gold: #ffd166;
+  --fpp-gold-glow: 0 0 6px rgba(255, 209, 102, .55), 0 0 18px rgba(255, 184, 0, .35);
+}
+html.fpp-dark .rating-value .big {
+  color: var(--fpp-gold) !important;
+  text-shadow: 0 0 10px rgba(255, 209, 102, .6), 0 0 28px rgba(255, 170, 0, .35);
+  animation: fpp-gold-pulse 3.5s ease-in-out infinite;
+}
+html.fpp-dark .rating-value .inline-block-vat { color: rgba(255, 209, 102, .75) !important; }
+html.fpp-dark .rating-full, html.fpp-dark .rating-stars, html.fpp-dark .review-item-rating,
+html.fpp-dark .rating-full *, html.fpp-dark .rating-stars *, html.fpp-dark .review-item-rating *,
+html.fpp-dark [class*="rating"] .fa-star, html.fpp-dark [class*="rating"] i {
+  color: var(--fpp-gold) !important;
+  text-shadow: var(--fpp-gold-glow);
+}
+/* Звёзды, нарисованные картинкой/фоном, подсвечиваем фильтром */
+html.fpp-dark .rating-full, html.fpp-dark .rating-stars, html.fpp-dark .review-item-rating {
+  filter: drop-shadow(0 0 4px rgba(255, 200, 60, .55));
+}
+/* Полоски распределения оценок */
+html.fpp-dark .rating-full-count .rating-progress,
+html.fpp-dark .rating-full-count .progress { background: rgba(255, 255, 255, .08) !important; }
+html.fpp-dark .rating-full-count .progress-bar, html.fpp-dark .rating-full-count .rating-progress-bar,
+html.fpp-dark .rating-full-count .progress > div {
+  background: linear-gradient(90deg, #ffb703, #ffd166) !important;
+  box-shadow: 0 0 8px rgba(255, 200, 60, .5);
+}
+@keyframes fpp-gold-pulse {
+  50% { text-shadow: 0 0 14px rgba(255, 209, 102, .8), 0 0 36px rgba(255, 170, 0, .45); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.fpp-dark .rating-value .big { animation: none; }
+}
+
+/* Страница категории лотов: белая подложка таблицы, плашки, фильтры */
+html.fpp-dark .content-with-cd-wide, html.fpp-dark .showcase, html.fpp-dark .with-tbl-footer,
+html.fpp-dark .layout-swap, html.fpp-dark .cd-forward, html.fpp-dark .showcase-table,
+html.fpp-dark .tc-header, html.fpp-dark .tc .tc-header {
+  background: transparent !important; border: none !important; box-shadow: none !important;
+}
+html.fpp-dark .content-with-cd-wide {
+  background: rgba(12, 12, 22, 0.6) !important; backdrop-filter: blur(12px);
+  border: 1px solid var(--fpp-border) !important; border-radius: 16px !important;
+}
+html.fpp-dark .content-with-cd-wide .tc { background: transparent !important; border: none !important; backdrop-filter: none !important; }
+html.fpp-dark .tc-item, html.fpp-dark a.tc-item { background: transparent !important; }
+html.fpp-dark .tc-item:hover { background: rgba(var(--fpp-a-rgb), 0.12) !important; }
+html.fpp-dark .tc-header, html.fpp-dark .tc-header * { color: var(--fpp-muted) !important; }
+html.fpp-dark .tc-item *, html.fpp-dark .media-user-name { color: var(--fpp-text) !important; }
+html.fpp-dark .media-user-info, html.fpp-dark .rating-mini-count { color: var(--fpp-muted) !important; }
+
+/* Плашки разделов (Аккаунты, Ключи, …) */
+html.fpp-dark .counter-list .counter-item, html.fpp-dark .counter-list-pills .counter-item {
+  background: rgba(255, 255, 255, 0.05) !important; border: 1px solid var(--fpp-border) !important;
+  color: var(--fpp-text) !important; box-shadow: none !important;
+}
+html.fpp-dark .counter-list .counter-item:hover { background: rgba(var(--fpp-a-rgb), 0.16) !important; }
+html.fpp-dark .counter-list .counter-item.active {
+  background: linear-gradient(135deg, var(--fpp-a-deep), var(--fpp-a-mid)) !important; border-color: transparent !important; color: var(--fpp-on-g) !important;
+}
+html.fpp-dark .counter-list .counter-item * { color: inherit !important; }
+html.fpp-dark .counter-list .counter-value { opacity: .6; }
+
+/* Плашка чата над таблицей (.chat-promo): продавец, сообщение, «Открыть чат» */
+html.fpp-dark .chat-promo {
+  background: rgba(16, 16, 28, 0.7) !important; backdrop-filter: blur(12px);
+  border: 1px solid var(--fpp-border) !important; border-radius: 14px !important; box-shadow: none !important;
+}
+html.fpp-dark .chat-promo > div, html.fpp-dark .chat-promo-user, html.fpp-dark .chat-promo-desc,
+html.fpp-dark .chat-promo-btn { background: transparent !important; border: none !important; }
+html.fpp-dark .chat-promo-desc, html.fpp-dark .chat-promo-desc * { color: var(--fpp-text) !important; }
+html.fpp-dark .chat-promo-user a, html.fpp-dark .chat-promo-user .media-user-name { color: var(--fpp-a-light) !important; }
+
+/* Рекламная плашка продавца над таблицей */
+html.fpp-dark .promo-offer, html.fpp-dark .lot-promo, html.fpp-dark [class*="promo-offer"],
+html.fpp-dark .cd-forward > .bg-white, html.fpp-dark .cd-forward [class*="banner"] {
+  background: rgba(16, 16, 28, 0.7) !important; border: 1px solid var(--fpp-border) !important;
+  border-radius: 14px !important; color: var(--fpp-text) !important; box-shadow: none !important;
+}
+
+/* Фильтры: вкладки, переключатели, селекты */
+html.fpp-dark .showcase-filter-input, html.fpp-dark label.form-control-box, html.fpp-dark .form-control-box {
+  background: rgba(255, 255, 255, 0.04) !important; color: var(--fpp-text) !important;
+  border-color: var(--fpp-border) !important; box-shadow: none !important;
+}
+/* Кнопки-фильтры (Все, Прокачка, Фарм…): контейнер без рамки, кнопки-«таблетки» */
+html.fpp-dark .lot-field-radio-box, html.fpp-dark .lot-field, html.fpp-dark .lot-fields,
+html.fpp-dark .showcase-filters, html.fpp-dark .showcase-filter {
+  background: transparent !important; border: none !important; box-shadow: none !important;
+}
+html.fpp-dark .lot-field-radio-box { display: flex !important; flex-wrap: wrap; gap: 6px; }
+html.fpp-dark .lot-field-radio-box button {
+  background: rgba(255, 255, 255, 0.05) !important; color: var(--fpp-muted) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important; border-radius: 999px !important;
+  padding: 6px 14px !important; margin: 0 !important; box-shadow: none !important;
+  transition: background .15s, color .15s;
+}
+html.fpp-dark .lot-field-radio-box button:hover {
+  background: rgba(var(--fpp-a-rgb), 0.16) !important; color: #fff !important;
+}
+html.fpp-dark .lot-field-radio-box button.active {
+  background: linear-gradient(135deg, var(--fpp-a-deep), var(--fpp-a-mid)) !important; color: var(--fpp-on-g) !important;
+  border-color: transparent !important; box-shadow: 0 4px 14px rgba(var(--fpp-a-deep-rgb), .35) !important;
+}
+/* Переключатель «Только продавцы онлайн» и поиск: мягкие скруглённые поля */
+html.fpp-dark label.form-control-box, html.fpp-dark .form-control-box, html.fpp-dark .showcase-filter-input {
+  border-radius: 10px !important; border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Системные оповещения FunPay в чате (.alert-info и др.) */
+html.fpp-dark .alert, html.fpp-dark .alert-info, html.fpp-dark .alert-warning,
+html.fpp-dark .alert-success, html.fpp-dark .alert-danger {
+  background: rgba(var(--fpp-a2-rgb), 0.07) !important; color: var(--fpp-text) !important;
+  border: none !important; border-left: 3px solid rgba(var(--fpp-a2-rgb), 0.6) !important;
+  border-radius: 10px !important; box-shadow: none !important;
+}
+html.fpp-dark .alert-warning { background: rgba(255, 209, 102, 0.07) !important; border-left-color: rgba(255, 209, 102, .6) !important; }
+html.fpp-dark .alert-success { background: rgba(61, 255, 176, 0.06) !important; border-left-color: rgba(61, 255, 176, .5) !important; }
+html.fpp-dark .alert-danger { background: rgba(255, 90, 110, 0.08) !important; border-left-color: rgba(255, 90, 110, .6) !important; }
+html.fpp-dark .alert *, html.fpp-dark .chat-msg-text { color: var(--fpp-text) !important; }
+html.fpp-dark .alert a { color: var(--fpp-a-light) !important; }
+html.fpp-dark .alert .alert-icon { color: var(--fpp-a2) !important; }
+
+/* Время у сообщений: просто приглушённый текст */
+html.fpp-dark .chat-msg-date {
+  background: transparent !important; border: none !important; padding: 0 !important;
+  color: var(--fpp-muted) !important; font-size: 11px;
+}
+
+/* Разделитель даты в чате («18 сентября»): градиентная линия + стеклянная таблетка */
+html.fpp-dark .chat-message-list-date { background: transparent !important; border: none !important; }
+html.fpp-dark .chat-message-list-date::before {
+  background: linear-gradient(90deg, transparent, rgba(var(--fpp-a-rgb), .45), transparent) !important;
+  border: none !important; height: 1px !important;
+}
+html.fpp-dark .chat-message-list-date .inside {
+  background: rgba(var(--fpp-s1-rgb), 0.95) !important; color: var(--fpp-a-soft) !important;
+  border: 1px solid rgba(var(--fpp-a-rgb), .35) !important; border-radius: 999px !important;
+  padding: 2px 12px !important; font-size: 11px; font-weight: 600; letter-spacing: .03em;
+  box-shadow: 0 0 12px rgba(var(--fpp-a-rgb), .25) !important;
+}
+
+/* Логотип: перекрашиваем в белый фильтром, картинку не меняем */
+html.fpp-dark .navbar-brand img {
+  filter: brightness(0) invert(1) drop-shadow(0 0 6px rgba(var(--fpp-a-rgb), .5));
+}
+
+/* Поля профиля (дата регистрации, описание и т.п.): без рамок */
+html.fpp-dark .param-item, html.fpp-dark .profile-header-cols, html.fpp-dark .profile-header-col,
+html.fpp-dark .flb-profile-description-row, html.fpp-dark .flb-profile-description {
+  background: transparent !important; border: none !important; box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+html.fpp-dark .tc, html.fpp-dark .chat, html.fpp-dark .panel, html.fpp-dark .modal-content,
+html.fpp-dark .dropdown-menu, html.fpp-dark .offer-list-title-container + *,
+html.fpp-dark .profile-data, html.fpp-dark .lot-search {
+  background: rgba(16, 16, 28, 0.62) !important; backdrop-filter: blur(10px);
+  border: 1px solid var(--fpp-border) !important; border-radius: 14px !important; color: var(--fpp-text) !important;
+}
+html.fpp-dark .tc-item, html.fpp-dark .contact-item, html.fpp-dark .list-group-item {
+  background: transparent !important; color: var(--fpp-text) !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
+}
+html.fpp-dark .tc-header, html.fpp-dark .chat-header {
+  background: transparent !important; border-color: var(--fpp-border) !important;
+}
+/* Кнопки чата (копировать, оповещения, ...) были белыми */
+html.fpp-dark .chat-header .btn, html.fpp-dark .btn-gray, html.fpp-dark .btn-white {
+  background: rgba(255,255,255,0.06) !important; color: var(--fpp-text) !important; border-color: var(--fpp-border) !important;
+}
+html.fpp-dark .tc-item:hover, html.fpp-dark .contact-item:hover {
+  background-color: rgba(var(--fpp-a-rgb), 0.14) !important;
+}
+html.fpp-dark a { color: var(--fpp-a-light); }
+html.fpp-dark h1, html.fpp-dark h2, html.fpp-dark h3, html.fpp-dark h4, html.fpp-dark h5,
+html.fpp-dark .navbar a, html.fpp-dark .tc-price, html.fpp-dark .tc-desc-text { color: var(--fpp-text) !important; }
+html.fpp-dark .text-muted, html.fpp-dark small { color: var(--fpp-muted) !important; }
+html.fpp-dark input, html.fpp-dark textarea, html.fpp-dark select, html.fpp-dark .form-control {
+  background: rgba(10, 10, 18, 0.9) !important; color: var(--fpp-text) !important; border-color: var(--fpp-border) !important;
+}
+html.fpp-dark .btn-default { background: #23233a !important; color: var(--fpp-text) !important; border-color: var(--fpp-border) !important; }
+html.fpp-dark .btn-primary { background: var(--fpp-accent) !important; border-color: var(--fpp-accent) !important; color: var(--fpp-on-a) !important; }
+html.fpp-dark ::-webkit-scrollbar { width: 10px; }
+html.fpp-dark ::-webkit-scrollbar-thumb { background: var(--fpp-s4); border-radius: 6px; }
+html.fpp-dark ::-webkit-scrollbar-track { background: #0b0b12; }
+
+/* ===== Живые обои ===== */
+#fpp-wallpaper { position: fixed; inset: 0; z-index: -1; pointer-events: none; width: 100vw; height: 100vh; }
+html.fpp-wall body { background: transparent !important; }
+
+/* ===== Плавающая панель продавца ===== */
+#fpp-fab {
+  position: fixed; right: 20px; bottom: 20px; z-index: 99999; width: 52px; height: 52px; border-radius: 16px;
+  border: none; cursor: pointer; font-size: 24px; color: var(--fpp-on-g);
+  background: linear-gradient(135deg, var(--fpp-a), var(--fpp-a2)); box-shadow: 0 8px 24px rgba(var(--fpp-a-deep-rgb), .45);
+  transition: transform .2s;
+}
+#fpp-fab:hover { transform: translateY(-2px) scale(1.05); }
+#fpp-panel {
+  position: fixed; right: 20px; bottom: 84px; z-index: 99999; width: 320px; max-height: 70vh; overflow: auto;
+  background: rgba(18, 18, 30, .92); backdrop-filter: blur(16px); color: #e6e6f0;
+  border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 14px;
+  font: 13px/1.45 system-ui, sans-serif; box-shadow: 0 16px 40px rgba(0,0,0,.5); display: none;
+}
+#fpp-panel.open { display: block; animation: fpp-in .18s ease-out; }
+@keyframes fpp-in { from { opacity: 0; transform: translateY(8px); } }
+#fpp-panel h4 { margin: 10px 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: #9a9ab0 !important; }
+#fpp-panel input, #fpp-panel textarea {
+  width: 100%; box-sizing: border-box; background: #0d0d18; color: #e6e6f0; border: 1px solid #2b2b44;
+  border-radius: 8px; padding: 6px 8px; font: inherit;
+}
+#fpp-panel .fpp-row { display: flex; gap: 6px; align-items: center; }
+#fpp-panel .fpp-res { margin-top: 6px; padding: 8px; border-radius: 8px; background: rgba(var(--fpp-a-rgb),.12); }
+.fpp-btn {
+  background: var(--fpp-s3); color: #e6e6f0; border: 1px solid var(--fpp-s4); border-radius: 8px; padding: 5px 10px;
+  cursor: pointer; font: 12px system-ui, sans-serif; white-space: nowrap;
+}
+.fpp-btn:hover { background: var(--fpp-a); border-color: var(--fpp-a); color: var(--fpp-on-a); }
+
+/* Кнопка автоперевода и счётчик символов в редакторе лота */
+.fpp-translate {
+  margin: 10px 0 4px; padding: 7px 14px; border-radius: 999px;
+  background: linear-gradient(135deg, var(--fpp-a-deep), var(--fpp-a2)) !important; border: none !important; color: var(--fpp-on-g) !important;
+  box-shadow: 0 4px 14px rgba(var(--fpp-a-deep-rgb), .35);
+}
+.fpp-translate:disabled { opacity: .6; cursor: wait; }
+.fpp-count { font: 11px system-ui, sans-serif; color: #8a8aa5; text-align: right; margin-top: 2px; }
+.fpp-count-warn { color: #ffb703; }
+
+/* Подбор ровной цены СБП */
+.fpp-sbp .fpp-sbp-hint { white-space: nowrap; }
+/* ₽ по центру поля, независимо от высоты подписи */
+.fpp-sbp .fpp-sbp-field { position: relative; }
+.fpp-sbp .fpp-sbp-field .form-control-feedback { top: 0; bottom: 0; height: auto; display: flex; align-items: center; justify-content: center; }
+.fpp-sbp-apply { background: linear-gradient(135deg, var(--fpp-a-deep), var(--fpp-a2)) !important; border: none !important; color: var(--fpp-on-g) !important; }
+.fpp-sbp-apply:disabled { opacity: .6; cursor: wait; }
+.fpp-sbp-hint { margin-top: 6px; color: #9a9ab0; min-height: 14px; }
+
+/* ===== Кошечка-маскот ===== */
+#fpp-neko.fpp-l2d { width: 280px; }
+#fpp-neko.fpp-l2d .fpp-neko-btn { animation: none; filter: drop-shadow(0 6px 16px rgba(var(--fpp-a-deep-rgb), .35)); }
+#fpp-neko.fpp-l2d canvas { display: block; width: 280px; height: 380px; }
+#fpp-neko {
+  position: fixed; left: var(--fpp-neko-x, 6px); bottom: var(--fpp-neko-y, 0px);
+  z-index: 99998; width: 170px; pointer-events: none;
+  transform: scale(var(--fpp-neko-scale, 1)); transform-origin: 0% 100%;
+}
+/* Персонаж у правого края: отступ и точка масштабирования зеркалятся */
+#fpp-neko.fpp-neko-right {
+  left: auto; right: var(--fpp-neko-x, 6px); transform-origin: 100% 100%;
+}
+#fpp-neko.fpp-neko-drag .fpp-neko-btn { cursor: grabbing; animation: none; }
+#fpp-neko.fpp-neko-drag .fpp-neko-bubble { opacity: 0; }
+.fpp-neko-btn {
+  pointer-events: auto; display: block; width: 100%; padding: 0; margin: 0; border: none !important;
+  background: none !important; box-shadow: none !important; cursor: pointer;
+  filter: drop-shadow(0 6px 16px rgba(var(--fpp-a-deep-rgb), .45));
+  transform-origin: 50% 100%; animation: fpp-neko-bob 3.2s ease-in-out infinite;
+}
+.fpp-neko-btn:focus-visible { outline: 2px solid var(--fpp-a); outline-offset: 4px; border-radius: 16px; }
+.fpp-neko-svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+.fpp-neko-tail { transform-origin: 128px 205px; animation: fpp-neko-tail 2.6s ease-in-out infinite; }
+.fpp-neko-head { transform-origin: 100px 150px; animation: fpp-neko-head 5s ease-in-out infinite; }
+.fpp-neko-ear-l { transform-origin: 66px 62px; animation: fpp-neko-ear 6s ease-in-out infinite; }
+.fpp-neko-ear-r { transform-origin: 134px 62px; animation: fpp-neko-ear-r 6s 1.4s ease-in-out infinite; }
+.fpp-neko-eyes { transform-origin: 100px 108px; animation: fpp-neko-blink 4.5s infinite; }
+/* Дыхание и колыхание волос */
+.fpp-neko-body { transform-origin: 100px 230px; animation: fpp-neko-breath 3.6s ease-in-out infinite; }
+.fpp-neko-hairback { transform-origin: 100px 84px; animation: fpp-neko-hair 4.2s ease-in-out infinite; }
+@keyframes fpp-neko-breath { 50% { transform: scale(1.012, 1.025); } }
+@keyframes fpp-neko-hair { 0%, 100% { transform: rotate(-1.2deg); } 50% { transform: rotate(1.2deg); } }
+.fpp-neko-happy, .fpp-neko-open { opacity: 0; }
+
+/* Реакция на клик: довольные глазки, открытый ротик, прыжок */
+#fpp-neko.fpp-neko-click .fpp-neko-eyes, #fpp-neko.fpp-neko-spin .fpp-neko-eyes,
+#fpp-neko.fpp-neko-click .fpp-neko-mouth, #fpp-neko.fpp-neko-spin .fpp-neko-mouth { opacity: 0; }
+#fpp-neko.fpp-neko-click .fpp-neko-happy, #fpp-neko.fpp-neko-spin .fpp-neko-happy,
+#fpp-neko.fpp-neko-click .fpp-neko-open, #fpp-neko.fpp-neko-spin .fpp-neko-open { opacity: 1; }
+#fpp-neko.fpp-neko-click .fpp-neko-btn { animation: fpp-neko-jump .6s cubic-bezier(.3, 1.6, .5, 1); }
+#fpp-neko.fpp-neko-spin .fpp-neko-btn { animation: fpp-neko-spin 1.1s ease-in-out; }
+#fpp-neko.fpp-neko-click .fpp-neko-tail, #fpp-neko.fpp-neko-spin .fpp-neko-tail { animation-duration: .45s; }
+#fpp-neko.fpp-neko-click .fpp-neko-ear-l, #fpp-neko.fpp-neko-click .fpp-neko-ear-r { animation: fpp-neko-ear-flick .4s ease-out; }
+
+/* Облачко с фразой */
+.fpp-neko-bubble {
+  position: absolute; bottom: calc(100% - 6px); left: 18px; max-width: 220px; width: max-content;
+  padding: 7px 12px; border-radius: 14px; font: 600 12px/1.35 system-ui, sans-serif; color: #f0ecff;
+  background: rgba(var(--fpp-s1-rgb), .94); border: 1px solid rgba(var(--fpp-a-rgb), .45);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .4), 0 0 14px rgba(var(--fpp-a-rgb), .3);
+  opacity: 0; transform: translateY(6px) scale(.95); transform-origin: 20% 100%;
+  transition: opacity .2s, transform .2s;
+}
+.fpp-neko-bubble::after {
+  content: ''; position: absolute; left: 22px; bottom: -6px; width: 10px; height: 10px;
+  background: rgba(var(--fpp-s1-rgb), .94); border-right: 1px solid rgba(var(--fpp-a-rgb), .45);
+  border-bottom: 1px solid rgba(var(--fpp-a-rgb), .45); transform: rotate(45deg);
+}
+.fpp-neko-bubble.show { opacity: 1; transform: none; }
+
+/* Сердечки */
+.fpp-neko-heart {
+  position: absolute; bottom: 62%; font-size: 16px; color: #ff8fb8; pointer-events: none; opacity: 0;
+  text-shadow: 0 0 8px rgba(255, 143, 184, .8); animation: fpp-neko-heart 1.2s ease-out forwards;
+}
+
+@keyframes fpp-neko-bob { 50% { transform: translateY(-3px); } }
+@keyframes fpp-neko-tail { 0%, 100% { transform: rotate(-9deg); } 50% { transform: rotate(10deg); } }
+@keyframes fpp-neko-head { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-3deg); } 65% { transform: rotate(2.5deg); } }
+@keyframes fpp-neko-ear { 0%, 90%, 100% { transform: rotate(0); } 94% { transform: rotate(-14deg); } }
+@keyframes fpp-neko-ear-r { 0%, 90%, 100% { transform: rotate(0); } 94% { transform: rotate(14deg); } }
+@keyframes fpp-neko-ear-flick { 50% { transform: rotate(-10deg) scaleY(.9); } }
+@keyframes fpp-neko-blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.08); } }
+@keyframes fpp-neko-jump {
+  0% { transform: none; } 30% { transform: translateY(-18px) scale(.95, 1.06); }
+  60% { transform: translateY(0) scale(1.07, .93); } 100% { transform: none; }
+}
+@keyframes fpp-neko-spin {
+  0% { transform: none; } 40% { transform: translateY(-22px) rotate(200deg); }
+  80% { transform: translateY(0) rotate(360deg) scale(1.05, .95); } 100% { transform: rotate(360deg); }
+}
+@keyframes fpp-neko-heart {
+  0% { opacity: 0; transform: translate(0, 0) scale(.6); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--dx, 0), -80px) scale(1.25); }
+}
+
+@media (max-width: 600px) { #fpp-neko { width: 110px; left: 2px; } }
+@media (prefers-reduced-motion: reduce) {
+  #fpp-neko *, #fpp-neko .fpp-neko-btn { animation: none !important; }
+}
+
+/* ===== Кнопка «✦ Plus» в шапке ===== */
+.fpp-nav-txt {
+  font-weight: 800; background: linear-gradient(90deg, var(--fpp-a-light), var(--fpp-a2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  transition: filter .2s;
+}
+html.fpp-dark .navbar-default .navbar-nav > li.fpp-nav > a { text-shadow: none !important; }
+.fpp-nav > a:hover .fpp-nav-txt, .fpp-nav.active .fpp-nav-txt { filter: drop-shadow(0 0 8px rgba(var(--fpp-a-rgb), .8)); }
+
+/* ===== Страница расширения ===== */
+#fpp-dash { padding-top: 24px; padding-bottom: 48px; color: #e6e6f0; }
+#fpp-dash .fpp-dash-head h1 {
+  font-size: 34px; margin: 0 0 6px; font-weight: 800;
+  background: linear-gradient(90deg, var(--fpp-a-light), var(--fpp-a2)); -webkit-background-clip: text; background-clip: text;
+  color: transparent !important;
+}
+#fpp-dash .fpp-dash-head { padding: 4px 0 18px; margin-bottom: 18px; border-bottom: 1px solid rgba(255, 255, 255, .06); }
+#fpp-dash .fpp-dash-head p { color: #9a9ab0; margin: 0; }
+.fpp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; align-items: stretch; }
+.fpp-grid > .fpp-card { display: flex; flex-direction: column; height: 100%; }
+#fpp-dash .fpp-dash-body { display: flex; gap: 20px; align-items: flex-start; }
+#fpp-dash .fpp-tabs {
+  display: flex; flex-direction: column; gap: 4px; flex: none; width: 220px;
+  position: sticky; top: 24px;
+}
+#fpp-dash .fpp-tab {
+  display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
+  background: transparent; border: 1px solid transparent; border-radius: 10px;
+  padding: 10px 12px; color: var(--fpp-a-soft); font: 600 13px system-ui, sans-serif; cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+}
+#fpp-dash .fpp-tab:hover { background: rgba(var(--fpp-a-rgb), .1); border-color: rgba(var(--fpp-a-rgb), .25); }
+#fpp-dash .fpp-tab.active {
+  background: linear-gradient(135deg, rgba(var(--fpp-a-deep-rgb), .25), rgba(var(--fpp-a2-rgb), .18));
+  border-color: rgba(var(--fpp-a-rgb), .45); color: #fff;
+}
+#fpp-dash .fpp-tab .fpp-ico { width: 24px; height: 24px; font-size: 13px; flex: none; }
+#fpp-dash .fpp-tab:focus-visible { outline: 2px solid var(--fpp-a); outline-offset: 2px; }
+#fpp-dash .fpp-panels { flex: 1; min-width: 0; }
+@media (max-width: 760px) {
+  #fpp-dash .fpp-dash-body { flex-direction: column; }
+  #fpp-dash .fpp-tabs { flex-direction: row; width: 100%; overflow-x: auto; position: static; }
+  #fpp-dash .fpp-tab { flex: none; }
+}
+#fpp-dash .fpp-gk-card h2 { color: #f5c66b; }
+#fpp-dash .fpp-gk-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+#fpp-dash .fpp-gk-val { flex: 1; min-width: 0; padding: 8px 10px; border-radius: 8px; background: #12121e;
+  border: 1px solid rgba(245, 198, 107, .35); color: #e6e6f0; letter-spacing: .5px;
+  font: 14px ui-monospace, Consolas, monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#fpp-dash .fpp-gk-val.fpp-gk-empty { color: #6f6f88; font-family: inherit; letter-spacing: 0; }
+#fpp-dash #fd-gkCopy { white-space: nowrap; }
+#fpp-dash #fd-gkCopy:disabled { opacity: .45; cursor: default; }
+.fpp-card {
+  background: rgba(16, 16, 28, .72); backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, .08); border-radius: 16px; padding: 18px; min-width: 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .25); transition: border-color .2s, box-shadow .2s;
+}
+.fpp-card:hover { border-color: rgba(var(--fpp-a-rgb), .35); box-shadow: 0 8px 28px rgba(var(--fpp-a-deep-rgb), .15); }
+.fpp-card h2 { display: flex; align-items: center; gap: 10px; }
+.fpp-ico {
+  display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; font-size: 15px;
+  background: linear-gradient(135deg, rgba(var(--fpp-a-deep-rgb), .25), rgba(var(--fpp-a2-rgb), .2));
+  border: 1px solid rgba(var(--fpp-a-rgb), .3);
+}
+.fpp-checks { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.fpp-two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; }
+.fpp-card label:not(.fpp-check):not(.fpp-switch) .fpp-muted { float: right; text-transform: none; letter-spacing: 0; color: var(--fpp-a-soft) !important; }
+.fpp-card input[type=file] {
+  width: 100%; box-sizing: border-box; font-size: 12px; color: #9a9ab0;
+  border: 1px dashed #2b2b44; border-radius: 10px; padding: 8px; background: rgba(13, 13, 24, .6);
+}
+.fpp-card input[type=file]::file-selector-button {
+  margin-right: 10px; border: none; border-radius: 8px; padding: 5px 10px; cursor: pointer;
+  background: #2b2b44; color: #e6e6f0;
+}
+.fpp-card select:focus, .fpp-card textarea:focus, .fpp-card .fpp-input:focus { outline: none; border-color: var(--fpp-a) !important; box-shadow: 0 0 0 3px rgba(var(--fpp-a-rgb), .2); }
+.fpp-card textarea { resize: vertical; min-height: 110px; }
+.fpp-card.fpp-wide { grid-column: 1 / -1; }
+.fpp-card h2 { font-size: 15px; margin: 0 0 10px; color: #fff !important; font-weight: 700; }
+.fpp-card-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px; }
+.fpp-card-head h2 { margin: 0; }
+.fpp-card label:not(.fpp-check):not(.fpp-switch) {
+  display: block; margin: 12px 0 6px; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: #9a9ab0;
+}
+.fpp-card select, .fpp-card textarea, .fpp-card .fpp-input {
+  width: 100%; box-sizing: border-box; background: #0d0d18 !important; color: #e6e6f0 !important;
+  border: 1px solid #2b2b44 !important; border-radius: 10px; padding: 8px 10px; font: inherit;
+}
+.fpp-card .fpp-row .fpp-input { flex: 1; min-width: 0; }
+.fpp-card details { margin-top: 4px; }
+.fpp-card details summary { cursor: pointer; color: var(--fpp-a-soft); }
+.fpp-card details ol { margin: 6px 0; padding-left: 18px; }
+.fpp-card details li { margin: 3px 0; }
+.fpp-card input[type=range] { width: 100%; accent-color: var(--fpp-a); }
+.fpp-muted { color: #8a8aa5 !important; font-size: 12px; }
+.fpp-check { display: flex; align-items: center; gap: 8px; cursor: pointer; margin: 8px 0; font-size: 13px; font-weight: 400; }
+/* FunPay ставит инпутам appearance: none, а тёмная тема перекрашивает фон,
+   поэтому нативная галочка пропадает. Рисуем свою. */
+.fpp-check input[type="checkbox"] {
+  -webkit-appearance: none !important; appearance: none !important;
+  flex: none; width: 16px; height: 16px; margin: 0 !important; padding: 0 !important;
+  border: 1.5px solid var(--fpp-a) !important; border-radius: 4px !important;
+  background: rgba(10, 10, 18, 0.9) !important; box-shadow: none !important;
+  display: inline-grid; place-content: center; cursor: pointer;
+}
+.fpp-check input[type="checkbox"]::before {
+  content: ""; width: 9px; height: 5px; margin-top: -2px;
+  border: solid var(--fpp-on-a); border-width: 0 0 2px 2px; transform: rotate(-45deg) scale(0);
+  transition: transform .12s;
+}
+.fpp-check input[type="checkbox"]:checked { background: var(--fpp-a) !important; }
+.fpp-check input[type="checkbox"]:checked::before { transform: rotate(-45deg) scale(1); }
+.fpp-check input[type="checkbox"]:focus-visible { outline: 2px solid var(--fpp-a2); outline-offset: 2px; }
+.fpp-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+.fpp-actions .fpp-check { margin: 0 0 0 auto; }
+.fpp-primary { background: linear-gradient(135deg, var(--fpp-a-deep), var(--fpp-a2)) !important; border: none !important; color: var(--fpp-on-g) !important; }
+.fpp-btn:disabled { opacity: .6; cursor: wait; }
+.fpp-row { display: flex; gap: 8px; align-items: center; }
+
+/* Переключатель */
+.fpp-switch { position: relative; width: 44px; height: 24px; flex: none; cursor: pointer; margin: 0; }
+.fpp-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+.fpp-switch span { position: absolute; inset: 0; border-radius: 999px; background: #2b2b44; transition: background .2s; }
+.fpp-switch span::after {
+  content: ''; position: absolute; left: 3px; top: 3px; width: 18px; height: 18px; border-radius: 50%;
+  background: #fff; transition: transform .2s;
+}
+.fpp-switch input:checked + span { background: linear-gradient(135deg, var(--fpp-a-deep), var(--fpp-a2)); box-shadow: 0 0 12px rgba(var(--fpp-a-deep-rgb), .5); }
+.fpp-switch input:checked + span::after { transform: translateX(20px); }
+.fpp-switch input:focus-visible + span { outline: 2px solid var(--fpp-a); outline-offset: 2px; }
+
+/* Список категорий автоподнятия */
+.fpp-raise-list { display: grid; gap: 4px; margin-top: 8px; max-height: 200px; overflow-y: auto; padding-right: 2px; }
+.fpp-raise-row {
+  display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; gap: 8px; align-items: center;
+  padding: 6px 10px; border-radius: 8px; background: rgba(255, 255, 255, .03); font-size: 13px;
+}
+.fpp-raise-row b { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fpp-raise-hint { font-size: 12px; margin: 4px 0 0; }
+.fpp-raise-card .fpp-actions { flex-wrap: wrap; gap: 6px; }
+.fpp-raise-card .fpp-actions .fpp-btn { padding: 6px 10px; font-size: 13px; }
+.fpp-dot { width: 8px; height: 8px; border-radius: 50%; background: #8a8aa5; }
+.fpp-raise-row.ok .fpp-dot { background: #3dffb0; box-shadow: 0 0 8px #3dffb0; }
+.fpp-raise-row.wait .fpp-dot { background: #ffd166; box-shadow: 0 0 8px #ffd166; }
+.fpp-raise-row.err .fpp-dot { background: #ff5a6e; box-shadow: 0 0 8px #ff5a6e; }
+.fpp-raise-next { font-size: 12px; color: var(--fpp-a-soft); white-space: nowrap; }
+.fpp-raise-err {
+  padding: 10px 12px; border-radius: 10px; margin-bottom: 6px;
+  background: rgba(255, 90, 110, .1); border-left: 3px solid #ff5a6e; color: #ffc2ca;
+}
+
+/* Чёрный список */
+.fpp-bl-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid rgba(255, 255, 255, .06); }
+.fpp-bl-row span { overflow: hidden; text-overflow: ellipsis; }
+.fpp-note-wrap { margin: 8px 12px; }
+.fpp-note-row { display: flex; gap: 8px; align-items: flex-start; }
+.fpp-note-wrap .fpp-note { margin: 0; width: auto; flex: 1; min-width: 0; }
+.fpp-bl-btn { flex: none; }
+.fpp-bl-banner {
+  display: none; margin-bottom: 6px; padding: 6px 10px; border-radius: 8px;
+  background: rgba(255, 90, 110, .12); border-left: 3px solid #ff5a6e; color: #ffb3bd; font: 12px system-ui, sans-serif;
+}
+.fpp-note-wrap.fpp-bl .fpp-bl-banner { display: block; }
+.contact-item.fpp-bl-contact, html.fpp-dark .contact-item.fpp-bl-contact {
+  box-shadow: inset 3px 0 0 #ff5a6e !important; background: rgba(255, 90, 110, .08) !important;
+}
+
+@media (max-width: 600px) {
+  .fpp-grid { grid-template-columns: 1fr; }
+  .fpp-two { grid-template-columns: 1fr; }
+  #fpp-dash .fpp-dash-head h1 { font-size: 26px; }
+  .fpp-actions .fpp-check { margin-left: 0; }
+}
+
+/* Быстрые ответы над полем чата */
+.fpp-templates { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+/* В правой колонке чата: столбиком внизу, на уровне кнопки отправки */
+.fpp-templates-side {
+  flex: none; flex-direction: column; flex-wrap: nowrap;
+  margin: auto 0 0; padding: 10px 12px 0; max-height: 60%; overflow-y: auto;
+}
+.fpp-templates-side:empty { display: none; }
+/* диалог не выбран — FunPay прячет форму отправки, прячем и ответы */
+.chat-full:has(.chat-not-selected) .fpp-templates-side { display: none; }
+.fpp-templates-title { font: 11px system-ui, sans-serif; text-transform: uppercase; letter-spacing: .05em; color: #9a9ab0; margin-bottom: 2px; }
+.fpp-templates-side .fpp-btn { width: 100%; text-align: left; white-space: normal; line-height: 1.3; padding: 6px 10px; }
+.fpp-tpl-text { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+/* тёмная тема делает всё в правой колонке прозрачным — возвращаем кнопкам фон */
+html.fpp-dark .chat-detail .fpp-templates-side .fpp-btn { background: var(--fpp-s3) !important; border-color: var(--fpp-s4) !important; }
+html.fpp-dark .chat-detail .fpp-templates-side .fpp-btn:hover,
+html.fpp-dark .chat-detail .fpp-templates-side .fpp-btn:focus-visible { background: var(--fpp-a) !important; border-color: var(--fpp-a) !important; color: var(--fpp-on-a) !important; }
+
+/* Заметки о покупателе */
+.fpp-note {
+  display: block; margin: 8px 12px; width: calc(100% - 24px); box-sizing: border-box; min-height: 40px;
+  border-radius: 10px; padding: 8px 10px; resize: vertical; font: 12px system-ui, sans-serif;
+  background: rgba(var(--fpp-a-rgb), .08) !important; border: 1px solid rgba(var(--fpp-a-rgb), .25) !important; color: inherit !important;
+}
+
+/* Подсветка непрочитанных */
+.fpp-unread-glow { box-shadow: inset 3px 0 0 var(--fpp-a), 0 0 18px rgba(var(--fpp-a-rgb),.25) !important; }
+
+#fpp-toast {
+  position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%); z-index: 100000;
+  background: var(--fpp-a); color: var(--fpp-on-a); padding: 8px 16px; border-radius: 10px; font: 13px system-ui; opacity: 0;
+  transition: opacity .2s; pointer-events: none;
+}
+#fpp-toast.show { opacity: 1; }
+
+/* ===== Замыливание ников покупателей =====
+   Класс висит на <html>, поэтому правила действуют и на подгруженные
+   сообщения/диалоги. Свой ник в шапке сайта не трогаем. */
+.fpp-blur-names .media-user-name,
+.fpp-blur-names .contact-item .media-user-name,
+.fpp-blur-names .chat-header .media-user-name,
+.fpp-blur-names .chat-msg-author,
+.fpp-blur-names .chat-msg-author-label,
+.fpp-blur-names .chat-msg-author-link,
+.fpp-blur-names .review-item-user .media-user-name,
+.fpp-blur-names .review-item-detail .media-user-name,
+.fpp-blur-names .tc-user,
+.fpp-blur-names .order-detail-list .media-user-name,
+.fpp-blur-names a[href*="/users/"]:not(.user-link-dropdown):not(.logout) {
+  filter: blur(var(--fpp-blur, 5px));
+  transition: filter .15s;
+  /* выделение текста под блюром выдало бы ник */
+  user-select: none;
+}
+/* Свой аккаунт в навигации должен остаться читаемым */
+.fpp-blur-names .user-link-dropdown,
+.fpp-blur-names .user-link-dropdown *,
+.fpp-blur-names .navbar a[href*="/users/"],
+.fpp-blur-names .navbar .media-user-name,
+/* свой ник где угодно: класс ставит markSelfNames(), CSS текст не читает */
+.fpp-blur-names .fpp-me,
+.fpp-blur-names .fpp-me .media-user-name,
+.fpp-blur-names .fpp-me .chat-msg-author,
+.fpp-blur-names .fpp-me .chat-msg-author-label,
+.fpp-blur-names .fpp-me .chat-msg-author-link,
+.fpp-blur-names .fpp-me .tc-user,
+.fpp-blur-names .fpp-me .avatar-photo,
+.fpp-blur-names .fpp-me a[href*="/users/"] {
+  filter: none !important;
+  user-select: auto;
+}
+/* Аватарки тоже узнаваемы */
+.fpp-blur-names .contact-item .avatar-photo,
+.fpp-blur-names .chat-header .avatar-photo,
+.fpp-blur-names .chat-msg-item .avatar-photo,
+.fpp-blur-names .review-item .avatar-photo {
+  filter: blur(calc(var(--fpp-blur, 5px) * 1.4));
+}
+/* В сообщениях .media-user-name оборачивает и ник, и время: блюрим только
+   ссылку с ником, иначе время замыливается, а вложенный блюр не снимается */
+.fpp-blur-names .chat-msg-item .media-user-name { filter: none; user-select: auto; }
+/* Наведение на ник, его блок или само сообщение снимает блюр со всего вложенного */
+.fpp-blur-hover .media-user-name:hover *,
+.fpp-blur-hover .chat-msg-item:hover .media-user-name,
+.fpp-blur-hover .chat-msg-item:hover .media-user-name *,
+.fpp-blur-hover .chat-msg-item:hover .avatar-photo,
+.fpp-blur-hover .contact-item:hover .media-user-name *,
+.fpp-blur-hover .chat-header:hover .media-user-name * {
+  /* !important: правило блюра ссылок a[href*="/users/"]:not():not() специфичнее */
+  filter: none !important;
+  user-select: auto;
+}
+/* Наведение мыши показывает ник, чтобы можно было работать */
+.fpp-blur-hover .media-user-name:hover,
+.fpp-blur-hover .chat-msg-author:hover,
+.fpp-blur-hover .tc-user:hover,
+.fpp-blur-hover a[href*="/users/"]:hover,
+.fpp-blur-hover .contact-item:hover .media-user-name,
+.fpp-blur-hover .contact-item:hover .avatar-photo,
+.fpp-blur-hover .chat-header:hover .media-user-name,
+.fpp-blur-hover .chat-header:hover .avatar-photo,
+.fpp-blur-hover .review-item:hover .media-user-name,
+.fpp-blur-hover .review-item:hover .avatar-photo {
+  filter: none;
+  user-select: auto;
+}
+
+/* ===== Цвет заказов по статусу ===== */
+.tc-item.fpp-order-paid {
+  background: rgba(61, 255, 176, 0.10) !important;
+  box-shadow: inset 4px 0 0 #3dffb0;
+}
+.tc-item.fpp-order-paid .tc-status { color: #3dffb0 !important; font-weight: 600; }
+.tc-item.fpp-order-refund {
+  background: rgba(255, 79, 106, 0.10) !important;
+  box-shadow: inset 4px 0 0 #ff4f6a;
+}
+.tc-item.fpp-order-refund .tc-status { color: #ff4f6a !important; font-weight: 600; }
+.tc-item.fpp-order-paid:hover { background: rgba(61, 255, 176, 0.18) !important; }
+.tc-item.fpp-order-refund:hover { background: rgba(255, 79, 106, 0.18) !important; }
+/* Строка заказа — table-row: фон строки перекрывают ячейки, а inset-тень
+   на строке не рисуется. Поэтому красим каждую ячейку, полоску — первой. */
+html .tc-item.fpp-order-paid > div { background: rgba(61, 255, 176, 0.12) !important; }
+html .tc-item.fpp-order-refund > div { background: rgba(255, 79, 106, 0.12) !important; }
+html .tc-item.fpp-order-paid:hover > div { background: rgba(61, 255, 176, 0.2) !important; }
+html .tc-item.fpp-order-refund:hover > div { background: rgba(255, 79, 106, 0.2) !important; }
+html .tc-item.fpp-order-paid > div:first-child { box-shadow: inset 4px 0 0 #3dffb0; }
+html .tc-item.fpp-order-refund > div:first-child { box-shadow: inset 4px 0 0 #ff4f6a; }
+
+/* Мобильное меню навбара: тёмная подложка с блюром */
+html.fpp-dark .navbar-collapse.in,
+html.fpp-dark .navbar-collapse.collapsing,
+html.fpp-dark .navbar .dropdown-menu {
+  background: rgba(var(--fpp-s1-rgb), .72) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border-radius: 12px;
+}
+
+/* Свои обои: картинка / GIF / видео на весь экран */
+#fpp-wallpaper.fpp-wall-media {
+  position: fixed; inset: 0; width: 100vw; height: 100vh;
+  object-fit: cover; z-index: -1; pointer-events: none;
+}
+
+/* Боковая панель чата */
+#fpp-chat-btn {
+  position: fixed; bottom: 84px; right: 22px; z-index: 2147483000;
+  width: 48px; height: 48px; border-radius: 50%; border: none; cursor: pointer; font-size: 20px;
+  background: linear-gradient(135deg, var(--fpp-a-deep), var(--fpp-a2)); color: var(--fpp-on-g);
+  box-shadow: 0 6px 20px rgba(var(--fpp-a-deep-rgb), .45); transition: transform .2s;
+}
+#fpp-chat-btn:hover { transform: translateY(-2px) scale(1.05); }
+#fpp-chat-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+#fpp-chat-btn[data-side="left"] { right: auto; left: 22px; }
+#fpp-chat-dock {
+  position: fixed; top: 0; bottom: 0; right: 0; width: min(420px, 100vw); z-index: 2147482999;
+  display: flex; flex-direction: column;
+  background: rgba(var(--fpp-s1-rgb), .88); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  border-left: 1px solid rgba(var(--fpp-a-rgb), .35); box-shadow: -8px 0 30px rgba(0, 0, 0, .5);
+  transform: translateX(100%); visibility: hidden; transition: transform .25s ease, visibility .25s;
+}
+#fpp-chat-dock[data-side="left"] { right: auto; left: 0; border-left: none;
+  border-right: 1px solid rgba(var(--fpp-a-rgb), .35); transform: translateX(-100%); }
+#fpp-chat-dock.open { transform: none; visibility: visible; }
+.fpp-chat-head { display: flex; align-items: center; gap: 4px; padding: 10px 12px;
+  border-bottom: 1px solid rgba(var(--fpp-a-rgb), .25); color: #e6e4f0; font: 14px system-ui, sans-serif; }
+.fpp-chat-head b { flex: 1; }
+.fpp-chat-head button { background: none; border: none; color: var(--fpp-a-light); cursor: pointer;
+  width: 30px; height: 30px; border-radius: 8px; font-size: 15px; }
+.fpp-chat-head button:hover, .fpp-chat-head button:focus-visible { background: rgba(var(--fpp-a-rgb), .2); color: #fff; }
+#fpp-chat-dock iframe { flex: 1; width: 100%; border: 0; background: transparent; }
+@media (prefers-reduced-motion: reduce) { #fpp-chat-dock { transition: none; } }
+
+/* Пасхалка: физика элементов */
+#fpp-physics { position: fixed; inset: 0; z-index: 2147483600; touch-action: none; }
+.fpp-phys-body { position: absolute !important; left: 0; top: 0; box-sizing: border-box; overflow: hidden;
+  cursor: grab; user-select: none; will-change: transform; pointer-events: auto; }
+.fpp-phys-body:active { cursor: grabbing; }
+.fpp-phys-body * { pointer-events: none; }
+.fpp-phys-hint { position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+  padding: 6px 14px; border-radius: 10px; background: rgba(var(--fpp-s1-rgb), .85); color: #e6e4f0;
+  font: 13px system-ui, sans-serif; pointer-events: none; }
+
+/* Статистика продаж */
+#fpp-stats { margin: 0 0 18px; padding: 18px; border-radius: 16px; color: #e6e4f0; font: 13px system-ui, sans-serif;
+  background: linear-gradient(160deg, rgba(var(--fpp-s3-rgb), .75), rgba(var(--fpp-s1-rgb), .82));
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  border: 1px solid rgba(var(--fpp-a-rgb), .3); box-shadow: 0 10px 40px rgba(0, 0, 0, .35); }
+#fpp-stats span { display: block; color: #a9a6c4; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+#fpp-stats button { font: inherit; cursor: pointer; }
+#fpp-stats button:focus-visible, .fpp-st-bar:focus-visible { outline: 2px solid var(--fpp-a2); outline-offset: 2px; }
+.fpp-st-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
+.fpp-st-head h2 { margin: 0; font-size: 18px; font-weight: 700; color: #fff; }
+.fpp-st-tabs { display: flex; gap: 4px; padding: 4px; border-radius: 12px; background: rgba(0, 0, 0, .3); }
+.fpp-st-tab { border: 0; padding: 7px 14px; border-radius: 9px; background: none; color: #b8b5d4; transition: background .15s, color .15s; }
+.fpp-st-tab:hover { background: rgba(var(--fpp-a-rgb), .18); color: #fff; }
+.fpp-st-tab.on { background: linear-gradient(135deg, var(--fpp-a-deep), var(--fpp-a2)); color: var(--fpp-on-g); box-shadow: 0 4px 14px rgba(var(--fpp-a-deep-rgb), .4); }
+.fpp-st-hero { display: grid; grid-template-columns: 2fr 1fr; gap: 10px; margin-bottom: 10px; }
+.fpp-st-hero > div { padding: 14px 16px; border-radius: 12px; background: rgba(var(--fpp-a-rgb), .1); }
+.fpp-st-hero b { display: block; font-size: 28px; line-height: 1.15; color: #fff; }
+.fpp-st-hero > div:first-child b { background: linear-gradient(90deg, var(--fpp-a-soft), var(--fpp-a2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.fpp-st-hero i, .fpp-st-card i { font-style: normal; color: #a9a6c4; font-size: 12px; }
+.fpp-st-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.fpp-st-card { text-align: left; padding: 12px 14px; border-radius: 12px; color: inherit;
+  background: rgba(255, 255, 255, .04); border: 1px solid rgba(255, 255, 255, .08);
+  border-left: 3px solid var(--fpp-a); transition: transform .15s, background .15s, border-color .15s; }
+.fpp-st-card:hover { transform: translateY(-2px); background: rgba(var(--fpp-a-rgb), .14); }
+.fpp-st-card b { display: block; font-size: 19px; color: #fff; }
+.fpp-st-card.paid { border-left-color: #3dffb0; } .fpp-st-card.paid b { color: #3dffb0; }
+.fpp-st-card.refund { border-left-color: #ff4f6a; } .fpp-st-card.refund b { color: #ff4f6a; }
+.fpp-st-card.on { border-color: rgba(var(--fpp-a-rgb), .8); background: rgba(var(--fpp-a-rgb), .22); }
+.fpp-st-row { display: grid; grid-template-columns: 3fr 2fr; gap: 10px; margin-top: 10px; }
+.fpp-st-panel { padding: 14px; border-radius: 12px; background: rgba(0, 0, 0, .22); min-width: 0; }
+.fpp-st-bars { display: flex; align-items: flex-end; gap: 4px; height: 130px; }
+.fpp-st-bars.dense { gap: 2px; }
+.fpp-st-bar { position: relative; flex: 1; height: 100%; display: flex; align-items: flex-end; cursor: pointer; }
+.fpp-st-bar::before { content: ''; width: 100%; height: max(3px, var(--h)); border-radius: 5px 5px 2px 2px;
+  background: linear-gradient(180deg, var(--fpp-a-light), var(--fpp-a2)); opacity: .75; transition: opacity .15s, filter .15s; }
+.fpp-st-bar:hover::before, .fpp-st-bar:focus::before { opacity: 1; filter: drop-shadow(0 0 6px rgba(var(--fpp-a2-rgb), .7)); }
+.fpp-st-bar em { position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); z-index: 2;
+  padding: 5px 9px; border-radius: 8px; background: var(--fpp-s2); border: 1px solid rgba(var(--fpp-a-rgb), .4);
+  font-style: normal; font-size: 11px; white-space: nowrap; text-align: center; color: #a9a6c4;
+  opacity: 0; pointer-events: none; transition: opacity .12s; }
+.fpp-st-bar em b { color: #fff; font-size: 13px; }
+.fpp-st-bar:hover em, .fpp-st-bar:focus em { opacity: 1; }
+.fpp-st-top { list-style: none; margin: 0; padding: 0; counter-reset: t; }
+.fpp-st-top li { position: relative; display: grid; grid-template-columns: 22px 1fr auto auto; align-items: center; gap: 8px;
+  padding: 7px 8px; margin-bottom: 4px; border-radius: 8px; overflow: hidden; counter-increment: t; }
+.fpp-st-top li::before { content: counter(t); color: var(--fpp-a); font-weight: 700; }
+.fpp-st-top li::after { content: ''; position: absolute; inset: 0; width: var(--w); z-index: -1;
+  background: linear-gradient(90deg, rgba(var(--fpp-a-rgb), .25), rgba(var(--fpp-a2-rgb), .08)); border-radius: 8px; }
+.fpp-st-top li.empty { display: block; color: #a9a6c4; } .fpp-st-top li.empty::before { content: none; }
+.fpp-st-top em { font-style: normal; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fpp-st-top b { color: #fff; } .fpp-st-top i { font-style: normal; color: #a9a6c4; font-size: 12px; }
+.fpp-st-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 12px; }
+.fpp-st-foot > span { flex: 1; margin: 0 !important; text-transform: none !important; letter-spacing: 0 !important; font-size: 12px !important; }
+.fpp-st-link { border: 0; background: none; color: var(--fpp-a-light); text-decoration: underline; }
+.fpp-st-load { border: 0; padding: 8px 16px; border-radius: 10px; color: var(--fpp-on-g); background: linear-gradient(135deg, var(--fpp-a-deep), var(--fpp-a2)); }
+.fpp-st-load:disabled { opacity: .6; cursor: wait; }
+a.tc-item.fpp-stats-hidden { display: none !important; }
+@media (max-width: 760px) { .fpp-st-hero, .fpp-st-row, .fpp-st-cards { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .fpp-st-card, .fpp-st-tab { transition: none; } }
+
+/* Статистика: постоянные покупатели */
+.fpp-st-buyers { margin-top: 10px; overflow-x: auto; background: rgba(var(--fpp-s2-rgb), .55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 12px; padding: 4px; }
+.fpp-st-bhead { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+.fpp-st-bhead i { font-style: normal; color: #a9a6c4; font-size: 12px; }
+.fpp-st-buyers table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.fpp-st-buyers th { text-align: left; font-weight: 600; color: #a9a6c4; font-size: 11px; text-transform: uppercase;
+  letter-spacing: .04em; padding: 6px 8px; border-bottom: 1px solid rgba(var(--fpp-a-rgb), .25); }
+.fpp-st-buyers td { padding: 7px 8px; border-bottom: 1px solid rgba(255, 255, 255, .05); white-space: nowrap; }
+.fpp-st-buyers tbody tr:hover, .fpp-st-buyers tr.on { background: rgba(var(--fpp-a-rgb), .14); }
+.fpp-st-buyers td:first-child { color: var(--fpp-a); font-weight: 700; }
+.fpp-st-buyers td b { color: #fff; }
+.fpp-st-buyers td.bad { color: #ff4f6a; }
+.fpp-st-buyer { border: 0; padding: 0; background: none; color: var(--fpp-a-soft); font-weight: 600; text-decoration: underline dotted; }
+.fpp-st-buyer:hover { color: #fff; }
+.fpp-st-loyal { font-style: normal; font-size: 10px; padding: 1px 6px; border-radius: 6px; margin-left: 4px;
+  background: rgba(61, 255, 176, .15); color: #3dffb0; }
+.fpp-st-buyers .empty { margin: 0; color: #a9a6c4; }
+
+/* Статистика: кнопка сброса фильтра и прогресс */
+.fpp-st-foot:not(:has(button)):not(:has(.fpp-st-progress)) { display: none; }
+.fpp-st-progress { color: #a9a6c4; }
+.fpp-st-reset { border: 1px solid rgba(var(--fpp-a-rgb), .45); padding: 7px 14px; border-radius: 10px;
+  background: rgba(var(--fpp-a-rgb), .12); color: #e6e4f0; transition: background .15s, border-color .15s; }
+.fpp-st-reset:hover { background: rgba(var(--fpp-a-rgb), .25); border-color: rgba(var(--fpp-a-rgb), .8); color: #fff; }
+.fpp-st-reset b { color: var(--fpp-a-soft); }
+
+/* Кнопка сброса на всю ширину нижней зоны */
+#fpp-stats .fpp-st-reset { flex: 1 1 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 42px; padding: 10px 16px; border-radius: 12px; font-size: 14px; font-weight: 600; letter-spacing: .02em;
+  border: 1px solid rgba(var(--fpp-a-rgb), .5); color: #fff;
+  background: linear-gradient(135deg, rgba(var(--fpp-a-deep-rgb), .28), rgba(var(--fpp-a2-rgb), .18));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08); transition: background .15s, border-color .15s, transform .15s; }
+#fpp-stats .fpp-st-reset:hover { background: linear-gradient(135deg, rgba(var(--fpp-a-deep-rgb), .45), rgba(var(--fpp-a2-rgb), .3));
+  border-color: rgba(var(--fpp-a-rgb), .9); transform: translateY(-1px); }
+#fpp-stats .fpp-st-reset b { color: var(--fpp-a-soft); font-weight: 700; }
+
+/* Вкл/выкл лота в списке */
+a.tc-item { position: relative; }
+.fpp-offer-toggle {
+  position: absolute; left: -26px; top: 50%; transform: translateY(-50%);
+  width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--fpp-a-dim);
+  background: var(--fpp-s2); color: #777; font-size: 12px; line-height: 18px; cursor: pointer; padding: 0;
+}
+.fpp-offer-toggle.on { color: #7cf0a0; box-shadow: 0 0 6px #7cf0a088; }
+.fpp-offer-toggle:hover { border-color: var(--fpp-a-light); }
+.fpp-offer-toggle:focus-visible { outline: 2px solid var(--fpp-a-light); outline-offset: 2px; }
+.fpp-offer-toggle:disabled { opacity: .5; cursor: wait; }
+a.tc-item.fpp-off { opacity: .55; }
+#fpp-copy-offer, #fpp-paste-offer { margin: 0 0 12px; }
+
+/* Массовое вкл/выкл лотов */
+.fpp-mass { display: inline-flex; gap: 6px; margin-left: 12px; vertical-align: middle; }
+#fpp-mass-all { display: flex; margin: 0 0 14px; }
+.fpp-mass-btn { padding: 4px 10px; font-size: 12px; }
+/* main.css FunPay задаёт input[type=file] { display: block } и перебивает атрибут hidden */
+.fpp-mass input[type="file"][hidden],
+input[type="file"][id^="fd-"][hidden] { display: none !important; }
+
+/* Режим автоперевода */
+.fpp-translate-mode { margin-left: 10px; font: 12px system-ui, sans-serif; color: #7cf0a0; }
+
+/* Реальная цена под ценой лота и комиссия раздела */
+.fpp-net { font: 11px system-ui, sans-serif; color: #7cf0a0; opacity: .9; margin-top: 2px; white-space: nowrap; }
+.fpp-fee {
+  display: inline-block; margin-left: 12px; padding: 3px 10px; border-radius: 999px; vertical-align: middle;
+  font: 600 13px system-ui, sans-serif; color: var(--fpp-on-g); background: linear-gradient(135deg, var(--fpp-a-deep), var(--fpp-a2));
+}
+
+/* Экспорт/импорт лотов */
+#fpp-lots-io { display: flex; flex-wrap: wrap; align-items: center; margin: 0 0 14px; }
+.fpp-lots-fmt { background: #12121e; color: #e6e6f0; border: 1px solid var(--fpp-s4); border-radius: 8px; padding: 3px 6px; font: 12px system-ui, sans-serif; }
+
+/* Панель эмодзи */
+.fpp-emoji { position: relative; margin: 6px 0; }
+.fpp-emoji-pop {
+  position: absolute; bottom: calc(100% + 6px); left: 0; z-index: 10000; width: 300px;
+  background: rgb(var(--fpp-s1-rgb)); border: 1px solid var(--fpp-s4); border-radius: 12px; padding: 8px;
+  box-shadow: 0 8px 28px rgba(0,0,0,.45);
+}
+.fpp-emoji-pop[hidden] { display: none; }
+.fpp-emoji-tabs { display: flex; gap: 4px; margin-bottom: 6px; border-bottom: 1px solid #2b2b44; padding-bottom: 6px; }
+.fpp-emoji-tab, .fpp-emoji-item { background: none; border: none; border-radius: 8px; cursor: pointer; font-size: 20px; line-height: 1; padding: 4px; }
+.fpp-emoji-tab.active { background: var(--fpp-s3); }
+.fpp-emoji-grid { display: grid; grid-template-columns: repeat(8, 1fr); max-height: 200px; overflow-y: auto; }
+.fpp-emoji-item:hover, .fpp-emoji-item:focus-visible, .fpp-emoji-tab:hover { background: rgba(var(--fpp-a-rgb), .33); outline: none; }
+/* В чате: круглая кнопка слева от «Отправить», окно открывается вверх и влево */
+.fpp-emoji-chat { flex: none; margin: 0 8px 0 0; }
+.fpp-emoji-chat .fpp-emoji-toggle { font-size: 20px; line-height: 40px; }
+.fpp-emoji-chat .fpp-emoji-pop { left: auto; right: 0; }
+
+/* Цветовая палитра: образцы-кружки и пипетки */
+.fpp-pals { display: grid; grid-template-columns: repeat(auto-fill, minmax(62px, 1fr)); gap: 6px; margin: 10px 0 2px; }
+.fpp-pal {
+  display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 8px 4px 6px;
+  background: rgba(255, 255, 255, .03); border: 1px solid transparent; border-radius: 12px; cursor: pointer;
+  color: #c4c2d8; font: 11px system-ui, sans-serif; transition: background .15s, border-color .15s, color .15s;
+}
+.fpp-pal:hover { background: rgba(255, 255, 255, .07); color: #fff; }
+.fpp-pal:focus-visible { outline: 2px solid var(--fpp-a2); outline-offset: 2px; }
+.fpp-pal[aria-checked="true"] { border-color: var(--fpp-a); background: rgba(var(--fpp-a-rgb), .16); color: #fff; }
+.fpp-pal-sw {
+  position: relative; width: 30px; height: 30px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--sw-a), var(--sw-b));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18), 0 2px 8px rgba(0, 0, 0, .35);
+}
+/* «Свои» без сохранённых цветов: радужный круг */
+.fpp-pal[data-pal="custom"] .fpp-pal-sw {
+  background: linear-gradient(135deg, var(--sw-a, transparent), var(--sw-b, transparent)),
+    conic-gradient(#ff5e62, #ffd66b, #1fb07a, #3aa6e0, #a46bff, #ff5fa2, #ff5e62);
+}
+.fpp-pal[aria-checked="true"] .fpp-pal-sw::after {
+  content: '✓'; position: absolute; inset: 0; display: grid; place-items: center;
+  color: #fff; font: 700 14px system-ui, sans-serif; text-shadow: 0 1px 3px rgba(0, 0, 0, .7);
+}
+.fpp-pal-name { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fpp-card input[type=color] {
+  display: block; width: 100%; height: 36px; box-sizing: border-box; padding: 3px; cursor: pointer;
+  background: #0d0d18; border: 1px solid #2b2b44; border-radius: 10px;
+}
+.fpp-card input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
+.fpp-card input[type=color]::-webkit-color-swatch { border: none; border-radius: 7px; }
+.fpp-card input[type=color]:focus-visible { outline: 2px solid var(--fpp-a2); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .fpp-pal { transition: none; } }

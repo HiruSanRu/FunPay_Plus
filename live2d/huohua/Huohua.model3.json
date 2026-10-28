@@ -1,0 +1,58 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "Huohua.moc3",
+		"Textures": [
+			"Huohua.4096/texture_00.png",
+			"Huohua.4096/texture_01.png",
+			"Huohua.4096/texture_02.png"
+		],
+		"Physics": "Huohua.physics3.json",
+		"DisplayInfo": "Huohua.cdi3.json",
+		"Expressions": [
+			{ "Name": "F01", "File": "expressions/f01_dark.exp3.json" },
+			{ "Name": "F02", "File": "expressions/f02_blush_heart.exp3.json" },
+			{ "Name": "F03", "File": "expressions/f03_angry.exp3.json" },
+			{ "Name": "F04", "File": "expressions/f04_dizzy.exp3.json" },
+			{ "Name": "F05", "File": "expressions/f05_squint.exp3.json" },
+			{ "Name": "F06", "File": "expressions/f06_surprised.exp3.json" },
+			{ "Name": "F07", "File": "expressions/f07_stars.exp3.json" },
+			{ "Name": "F08", "File": "expressions/f08_tears.exp3.json" },
+			{ "Name": "F10", "File": "expressions/f10_heart_hands.exp3.json" },
+			{ "Name": "F11", "File": "expressions/f11_beg.exp3.json" }
+		],
+		"Motions": {
+			"Idle": [
+				{
+					"File": "motions/idle.motion3.json",
+					"FadeInTime": 0.5,
+					"FadeOutTime": 0.5
+				}
+			],
+			"Sleep": [
+				{
+					"File": "motions/sleep.motion3.json",
+					"FadeInTime": 0.5,
+					"FadeOutTime": 0.5
+				}
+			]
+		}
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": [
+				"ParamMouthOpenY"
+			]
+		},
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": [
+				"ParamEyeLOpen",
+				"ParamEyeROpen"
+			]
+		}
+	]
+}

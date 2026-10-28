@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<style>
+  /* Цвета по умолчанию — фиолетовая палитра; выбранную popup.js ставит инлайном на <html> */
+  :root { --fpp-a: #8b6dff; --fpp-a-rgb: 139, 109, 255; --fpp-a-deep: #7d5bff; --fpp-a2: #4fc3ff;
+          --fpp-a-light: #b4a0ff; --fpp-s2: #1c1831; --fpp-s3: #272146; --fpp-s4: #392e67; --fpp-on-g: #fff; }
+  body { width: 300px; margin: 0; padding: 16px; font: 13px system-ui, sans-serif; color: #e6e6f0;
+         background: radial-gradient(circle at 20% 0%, var(--fpp-s3), #0b0b12 70%); }
+  h1 { font-size: 17px; margin: 0 0 12px; background: linear-gradient(90deg, var(--fpp-a-light), var(--fpp-a2));
+       -webkit-background-clip: text; color: transparent; }
+  label { display: block; margin: 10px 0 4px; color: #9a9ab0; }
+  select, textarea, input[type=number] { width: 100%; box-sizing: border-box; background: #12121e; color: #e6e6f0;
+       border: 1px solid #2b2b44; border-radius: 8px; padding: 6px; font: inherit; }
+  .sw { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+  input[type=range] { width: 100%; accent-color: var(--fpp-a); }
+  input[type=checkbox] { accent-color: var(--fpp-a); width: 18px; height: 18px; }
+  small { color: #6f6f88; }
+  #testSound { background: var(--fpp-s3); color: #e6e6f0; border: 1px solid var(--fpp-s4); border-radius: 8px;
+               padding: 6px 10px; cursor: pointer; }
+  #openPage { margin-top: 14px; width: 100%; padding: 9px; border: none; border-radius: 10px; cursor: pointer;
+              color: var(--fpp-on-g); font: 600 13px system-ui; background: linear-gradient(135deg, var(--fpp-a-deep), var(--fpp-a2)); }
+  /* Образцы палитры: только кружки, название во всплывающей подсказке */
+  .fpp-pals { display: flex; flex-wrap: wrap; gap: 6px; }
+  .fpp-pal { padding: 3px; border: 2px solid transparent; border-radius: 50%; background: none; cursor: pointer; }
+  .fpp-pal-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .fpp-pal-sw { display: block; width: 22px; height: 22px; border-radius: 50%;
+                background: linear-gradient(135deg, var(--sw-a), var(--sw-b));
+                box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18); }
+  .fpp-pal[data-pal="custom"] .fpp-pal-sw {
+    background: linear-gradient(135deg, var(--sw-a, transparent), var(--sw-b, transparent)),
+      conic-gradient(#ff5e62, #ffd66b, #1fb07a, #3aa6e0, #a46bff, #ff5fa2, #ff5e62); }
+  .fpp-pal:hover { border-color: rgba(255, 255, 255, .25); }
+  .fpp-pal[aria-checked="true"] { border-color: var(--fpp-a); }
+  .fpp-pal:focus-visible { outline: 2px solid var(--fpp-a2); outline-offset: 1px; }
+</style>
+</head>
+<body>
+  <h1>✦ FunPay Plus</h1>
+  <div class="sw"><span>Тёмная тема</span><input type="checkbox" id="dark" aria-label="Тёмная тема"></div>
+
+  <label id="palLabel">Цветовая палитра</label>
+  <div class="fpp-pals" id="palList" role="radiogroup" aria-labelledby="palLabel"></div>
+  <small>Свои цвета и подбор под обои — на странице FunPay Plus</small>
+
+  <label for="wallpaper">Живые обои</label>
+  <select id="wallpaper">
+    <option value="aurora">Северное сияние</option>
+    <option value="stars">Звёздное небо</option>
+    <option value="particles">Частицы (реагируют на мышь)</option>
+    <option value="grid">Сетка (реагирует на мышь)</option>
+    <option value="matrix">Матрица</option>
+    <option value="waves">Неоновые волны</option>
+    <option value="sakura">Сакура</option>
+    <option value="fireflies">Светлячки</option>
+    <option value="custom">Свои обои (загрузка в панели)</option>
+    <option value="none">Выключены</option>
+  </select>
+
+  <label for="wallOpacity">Яркость обоев</label>
+  <input type="range" id="wallOpacity" min="0.2" max="1" step="0.05">
+
+  <label for="sound">Звук новых сообщений</label>
+  <div class="sw" style="gap:6px;margin-top:0">
+    <select id="sound">
+      <option value="site">Стандартный FunPay</option>
+      <option value="off">Без звука</option>
+      <option value="chime">Перезвон</option>
+      <option value="pop">Поп</option>
+      <option value="bell">Колокольчик</option>
+      <option value="coin">Монетка</option>
+      <option value="soft">Мягкий аккорд</option>
+      <option value="custom">Свой файл…</option>
+    </select>
+    <button id="testSound" type="button" aria-label="Прослушать звук">▶</button>
+  </div>
+  <input type="file" id="customFile" accept="audio/*" style="display:none;margin-top:6px">
+  <small id="customName"></small>
+
+  <label for="soundVolume">Громкость</label>
+  <input type="range" id="soundVolume" min="0.05" max="1" step="0.05">
+
+  <div class="sw"><span>Автоподнятие лотов</span><input type="checkbox" id="autoRaise" aria-label="Автоподнятие лотов"></div>
+
+  <label for="templates">Быстрые ответы в чате (по одному в строке)</label>
+  <textarea id="templates" rows="5"></textarea>
+  <small>Сохраняется автоматически</small>
+  <button id="openPage" type="button">Открыть страницу FunPay Plus</button>
+  <script src="palette.js"></script>
+  <script src="sounds.js"></script>
+  <script src="popup.js"></script></body>
+</html>
