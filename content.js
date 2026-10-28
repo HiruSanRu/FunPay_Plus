@@ -2691,7 +2691,6 @@
   // с manifest.json на GitHub и показываем плашку со ссылкой на новый ZIP
   const UPDATE_URL = 'https://raw.githubusercontent.com/HiruSanRu/FunPay_Plus/main/manifest.json';
   const UPDATE_ZIP = 'https://github.com/HiruSanRu/FunPay_Plus/archive/refs/heads/main.zip';
-  const UPDATE_TTL = 6 * 60 * 60 * 1000;
 
   const verNewer = (a, b) => {
     const x = String(a).split('.').map(Number), y = String(b).split('.').map(Number);
@@ -2706,7 +2705,8 @@
     const cur = chrome.runtime.getManifest().version;
     chrome.storage.local.get({ updLatest: '', updAt: 0, updDismissed: '' }, async (v) => {
       let latest = v.updLatest;
-      if (Date.now() - v.updAt > UPDATE_TTL) {
+      // проверяем при каждой загрузке страницы, чтобы плашка появлялась сразу
+      {
         try {
           const r = await fetch(UPDATE_URL, { cache: 'no-cache' });
           if (r.ok) {
