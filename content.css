@@ -1080,3 +1080,17 @@ input[type="file"][id^="fd-"][hidden] { display: none !important; }
   border-radius: 10px; background: #1e1f2b; color: #f1f1f5; font-size: 13px; line-height: 1.4;
   box-shadow: 0 6px 24px rgba(0, 0, 0, .35); border: 1px solid rgba(255, 209, 102, .4);
 }
+
+/* Плашка о новой версии */
+#fpp-update {
+  position: fixed; left: 16px; bottom: 16px; z-index: 100000; max-width: 420px;
+  display: flex; flex-direction: column; gap: 10px; padding: 12px 14px;
+  border-radius: 12px; background: #1e1f2b; color: #f1f1f5; font-size: 13px; line-height: 1.4;
+  border: 1px solid var(--fpp-a, #8a5cf6); box-shadow: 0 8px 28px rgba(0, 0, 0, .4);
+}
+#fpp-update .fpp-upd-text span { opacity: .65; }
+#fpp-update details { margin-top: 6px; }
+#fpp-update summary { cursor: pointer; opacity: .8; }
+#fpp-update ol { margin: 6px 0; padding-left: 18px; }
+#fpp-update .fpp-upd-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+@media (max-width: 480px) { #fpp-update { left: 8px; right: 8px; max-width: none; } }
