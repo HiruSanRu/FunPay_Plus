@@ -1472,8 +1472,6 @@
               <select id="fd-wallpaper">${opts(WALLPAPERS)}</select>
               <label for="fd-wallFile">Свои обои: картинка, GIF или видео</label>
               <input type="file" id="fd-wallFile" accept="image/*,video/*">
-              <label for="fd-wallWE">Или папка обоев Wallpaper Engine</label>
-              <input type="file" id="fd-wallWE" webkitdirectory>
               <div id="fd-wallHint" class="fpp-sbp-hint" aria-live="polite"></div>
               <label for="fd-wallOpacity">Яркость обоев</label>
               <input type="range" id="fd-wallOpacity" min="0.2" max="1" step="0.05">
@@ -1771,31 +1769,6 @@
       } catch { hint.textContent = 'Не удалось сохранить файл'; }
     };
 
-    // Папка Wallpaper Engine: берём видео из project.json. Сцены (scene.pkg) и веб-обои
-    // рисует движок WE, браузер их не воспроизведёт, поэтому для них ставим превью (обычно GIF)
-    $('wallWE').onchange = async (e) => {
-      const files = [...e.target.files], hint = $('wallHint');
-      e.target.value = '';
-      const byName = (n) => n && files.find((f) => f.name.toLowerCase() === String(n).split('/').pop().toLowerCase());
-      const pj = byName('project.json');
-      if (!pj) { hint.textContent = 'В папке нет project.json, это не обои Wallpaper Engine'; return; }
-      let p;
-      try { p = JSON.parse(await pj.text()); } catch { hint.textContent = 'Не удалось прочитать project.json'; return; }
-      const type = String(p.type || '').toLowerCase();
-      let f = type === 'video' ? byName(p.file) : null, note = '';
-      if (!f) {
-        f = byName(p.preview);
-        note = type === 'scene' ? ' (сцена: анимация WE не поддерживается, стоит превью)'
-          : type === 'web' ? ' (веб-обои не поддерживаются, стоит превью)' : ' (стоит превью)';
-      }
-      if (!f || !/^(image|video)\//.test(f.type)) { hint.textContent = 'В папке не нашлось видео или превью'; return; }
-      try {
-        await wallFile(f);
-        $('wallpaper').value = 'custom';
-        hint.textContent = `Загружено: ${p.title || f.name}${note}`;
-        if (S.wallpaper === 'custom') startWallpaper(); else save({ wallpaper: 'custom' });
-      } catch { hint.textContent = 'Не удалось сохранить файл'; }
-    };
 
     // Цветовая палитра. Пипетка красит страницу сразу, в storage пишем с задержкой (у sync лимит записей)
     const P = FPP_PALETTE;
