@@ -83,6 +83,7 @@
   function applyTheme() {
     root.classList.toggle('fpp-dark', !!S.dark);
     root.classList.toggle('fpp-wall', S.wallpaper !== 'none');
+    root.classList.toggle('fpp-cover-hide', S.profileCover === 'hide');
     PAL = FPP_PALETTE.apply(root, S);
     applyNameBlur();
     syncMuteFlag();
@@ -181,15 +182,22 @@
   /* ---------- Баннер профиля ---------- */
   // Свой баннер (картинка / gif / видео) лежит в той же IndexedDB под ключом 'cover'.
   // FunPay рисует баннер фоном .profile-cover-img, поверх кладём свой элемент
-  let coverUrl = '';
+  let coverUrl = '', coverBusy = false;
   async function applyCover() {
     root.classList.toggle('fpp-cover-hide', S.profileCover === 'hide');
-    root.classList.toggle('fpp-cover-custom', S.profileCover === 'custom');
     const box = document.querySelector('.profile-cover-img');
-    if (!box) return;
-    if (S.profileCover !== 'custom') { box.querySelector('.fpp-cover-media')?.remove(); return; }
+    if (S.profileCover !== 'custom') {
+      root.classList.remove('fpp-cover-custom');
+      box?.querySelector('.fpp-cover-media')?.remove();
+      return;
+    }
+    // FunPay дорисовывает профиль после загрузки: applyCover зовётся и из MutationObserver
+    if (!box || coverBusy) return;
+    coverBusy = true;
     const blob = await wallFile(undefined, 'cover').catch(() => null);
+    coverBusy = false;
     if (!blob || S.profileCover !== 'custom') { root.classList.remove('fpp-cover-custom'); return; }
+    root.classList.add('fpp-cover-custom');
     if (coverUrl) URL.revokeObjectURL(coverUrl);
     coverUrl = URL.createObjectURL(blob);
     const isVideo = blob.type.startsWith('video/');
@@ -542,6 +550,7 @@
       addTranslateButton(); addCharCounters(); addSbpPrice(); addNavButton(); markBlacklisted();
       detectMe(); markSelfNames(); markOrderStatus(); renderSalesStats(); addOfferToggles(); addOfferCopy(); addMassToggle();
       addNetPrices(); addSectionFee(); addLotsExportImport(); addEmojiPanel(); markSupporters();
+      if (S.profileCover === 'custom' && !document.querySelector('.profile-cover-img .fpp-cover-media')) applyCover();
     }, 400));
     mo.observe(document.body, { childList: true, subtree: true });
   }

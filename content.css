@@ -1096,8 +1096,16 @@ input[type="file"][id^="fd-"][hidden] { display: none !important; }
 @media (max-width: 480px) { #fpp-update { left: 8px; right: 8px; max-width: none; } }
 
 /* Баннер профиля: убрать или заменить своим файлом */
-html.fpp-cover-hide .profile-cover-img { background: none !important; }
-html.fpp-cover-custom .profile-cover-img { background: none !important; overflow: hidden; }
+/* картинку FunPay рисует фоном .profile-cover-img (url(/img/layout/profile-header.jpg)) */
+html.fpp-cover-hide .profile-cover-img { display: none !important; }
+html.fpp-cover-hide .profile-cover-container,
+html.fpp-cover-hide .profile-cover-container::before, html.fpp-cover-hide .profile-cover-container::after,
+html.fpp-cover-custom .profile-cover-container::before, html.fpp-cover-custom .profile-cover-container::after {
+  background: none !important; background-image: none !important;
+}
+html.fpp-cover-custom .profile-cover-img {
+  background: none !important; background-image: none !important; overflow: hidden;
+}
 .profile-cover-img .fpp-cover-media {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: center; pointer-events: none;
