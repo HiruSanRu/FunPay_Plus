@@ -2937,8 +2937,13 @@
   function markOrderStatus() {
     document.querySelectorAll('.tc-item').forEach((el) => {
       const t = (el.querySelector('.tc-status')?.textContent || '').trim().toLowerCase();
-      el.classList.toggle('fpp-order-paid', t.startsWith('оплач'));
-      el.classList.toggle('fpp-order-refund', t.startsWith('возврат'));
+      // Финансы: тип операции в .tc-title («Вывод денег», «Отмена вывода денег», «Возврат…»)
+      const op = (el.querySelector('.tc-title')?.textContent || '').trim().toLowerCase();
+      const bad = op.startsWith('отмена вывода') || op.startsWith('возврат') ||
+        (op.startsWith('вывод') && t.startsWith('отмен'));
+      const good = !bad && op.startsWith('вывод');
+      el.classList.toggle('fpp-order-paid', good || (!op && t.startsWith('оплач')));
+      el.classList.toggle('fpp-order-refund', bad || (!op && t.startsWith('возврат')));
     });
   }
 
