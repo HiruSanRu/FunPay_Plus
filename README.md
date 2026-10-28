@@ -39,14 +39,11 @@
 <table>
 <tr>
 <td width="50%"><img src="docs/Screenshot_5.png" alt="Окно настроек FunPay Plus"><br><sub>Настройки: тема, обои, палитра, персонаж и звук</sub></td>
-<td width="50%"><img src="docs/Screenshot_4.png" alt="Статистика продаж"><br><sub>Статистика продаж и постоянные покупатели</sub></td>
+<td width="50%"><img src="docs/Screenshot_4.png" alt="Статистика продаж"><br><sub>Добавление лота с автопереводом на английский</sub></td>
 </tr>
 <tr>
-<td><img src="docs/Screenshot_1.png" alt="Живые обои и золотая палитра"><br><sub>Живые обои с Live2D-персонажем и золотой палитрой</sub></td>
-<td><img src="docs/Screenshot_3.png" alt="Тёмная тема"><br><sub>Тёмная тема без обоев</sub></td>
-</tr>
-<tr>
-<td colspan="2"><img src="docs/Screenshot_2.png" alt="Добавление лота с переводом"><br><sub>Добавление лота с автопереводом на английский</sub></td>
+<td><img src="docs/Screenshot_1.png" alt="Живые обои и золотая палитра"><br><sub>Статистика продаж и постоянные покупатели</sub></td>
+<td><img src="docs/Screenshot_3.png" alt="Тёмная тема"><br><sub>Живые обои с Live2D-персонажем и золотой палитрой</sub></td>
 </tr>
 </table>
 
