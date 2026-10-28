@@ -24,6 +24,7 @@
     palette: 'violet',     // цветовая палитра: id из FPP_PALETTE.PRESETS или custom
     paletteA: '',          // свои цвета палитры (#rrggbb): основной и второй
     paletteB: '',
+    profileCover: 'site',  // баннер профиля: site — как на FunPay, hide — убрать, custom — свой файл
     templates: [
       'Здравствуйте! Сейчас выдам заказ 🙂',
       'Спасибо за покупку! Буду рад отзыву ⭐',
@@ -39,7 +40,7 @@
   chrome.storage.sync.get(DEFAULTS, (v) => {
     S = v;
     applyTheme();
-    onReady(() => { startWallpaper(); initSellerTools(); });
+    onReady(() => { startWallpaper(); initSellerTools(); applyCover(); });
   });
 
   chrome.storage.onChanged.addListener((c, area) => {
@@ -52,6 +53,7 @@
     if (area !== 'sync') return;
     for (const k in c) S[k] = c[k].newValue;
     applyTheme();
+    if (c.profileCover) applyCover();
     if (c.wallpaper) startWallpaper();
     else if (c.wallOpacity) {
       // яркость меняем у готовых обоев, не пересоздавая сцену
@@ -167,13 +169,36 @@
       r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
     });
   }
-  async function wallFile(blob) {
+  async function wallFile(blob, key = 'wall') {
     const db = await wallDb();
     return new Promise((res, rej) => {
       const tx = db.transaction('f', blob === undefined ? 'readonly' : 'readwrite'), st = tx.objectStore('f');
-      const q = blob === undefined ? st.get('wall') : st.put(blob, 'wall');
+      const q = blob === undefined ? st.get(key) : st.put(blob, key);
       q.onsuccess = () => res(q.result); q.onerror = () => rej(q.error);
     });
+  }
+
+  /* ---------- Баннер профиля ---------- */
+  // Свой баннер (картинка / gif / видео) лежит в той же IndexedDB под ключом 'cover'.
+  // FunPay рисует баннер фоном .profile-cover-img, поверх кладём свой элемент
+  let coverUrl = '';
+  async function applyCover() {
+    root.classList.toggle('fpp-cover-hide', S.profileCover === 'hide');
+    root.classList.toggle('fpp-cover-custom', S.profileCover === 'custom');
+    const box = document.querySelector('.profile-cover-img');
+    if (!box) return;
+    if (S.profileCover !== 'custom') { box.querySelector('.fpp-cover-media')?.remove(); return; }
+    const blob = await wallFile(undefined, 'cover').catch(() => null);
+    if (!blob || S.profileCover !== 'custom') { root.classList.remove('fpp-cover-custom'); return; }
+    if (coverUrl) URL.revokeObjectURL(coverUrl);
+    coverUrl = URL.createObjectURL(blob);
+    const isVideo = blob.type.startsWith('video/');
+    const el = document.createElement(isVideo ? 'video' : 'img');
+    if (isVideo) Object.assign(el, { muted: true, loop: true, autoplay: true, playsInline: true });
+    el.src = coverUrl; el.alt = '';
+    el.className = 'fpp-cover-media';
+    box.querySelector('.fpp-cover-media')?.remove();
+    box.append(el);
   }
   let wallUrl = '';
   // Палитра под свои обои: уменьшаем картинку (или кадр видео) и ищем в ней акцентные цвета
@@ -1492,6 +1517,17 @@
             </section>
 
             <section class="fpp-card">
+              <h2><span class="fpp-ico">🖼</span>Баннер профиля</h2>
+              <p class="fpp-muted">Шапка на странице пользователя. Видите изменения только вы.</p>
+              <label for="fd-profileCover">Баннер</label>
+              <select id="fd-profileCover">${opts([['site', 'Как на FunPay'], ['hide', 'Убрать'], ['custom', 'Свой файл']])}</select>
+              <label for="fd-coverFile">Картинка, GIF или видео</label>
+              <input type="file" id="fd-coverFile" accept="image/*,video/*">
+              <p class="fpp-muted">Рекомендуемый размер: 3200×1200 (минимум 1600×600), соотношение 8:3. Важное держите по центру: края обрезаются на узких экранах. Видео: MP4 или WebM до 1080p, короткий цикл без звука.</p>
+              <div id="fd-coverHint" class="fpp-sbp-hint" aria-live="polite"></div>
+            </section>
+
+            <section class="fpp-card">
               <h2><span class="fpp-ico">🌈</span>Цветовая палитра</h2>
               <p class="fpp-muted">Цвет кнопок, ссылок, подсветки, живых обоев и иконки уведомлений.</p>
               <div class="fpp-pals" id="fd-palList" role="radiogroup" aria-label="Цветовая палитра">${FPP_PALETTE.swatchesHtml()}</div>
@@ -1762,6 +1798,26 @@
       saveBlur();
     };
     $('dark').onchange = (e) => save({ dark: e.target.checked });
+    $('profileCover').value = S.profileCover || 'site';
+    $('profileCover').onchange = (e) => {
+      $('coverHint').textContent = '';
+      if (e.target.value === 'custom') {
+        // без файла выбор «Свой файл» ничего не покажет — подсказываем
+        wallFile(undefined, 'cover').then((b) => { if (!b) $('coverHint').textContent = 'Выберите файл ниже'; }).catch(() => {});
+      }
+      save({ profileCover: e.target.value });
+    };
+    $('coverFile').onchange = async (e) => {
+      const f = e.target.files[0], hint = $('coverHint');
+      if (!f) return;
+      if (!/^(image|video)\//.test(f.type)) { hint.textContent = 'Нужна картинка, GIF или видео'; return; }
+      try {
+        await wallFile(f, 'cover');
+        $('profileCover').value = 'custom';
+        hint.textContent = `Загружено: ${f.name}`;
+        if (S.profileCover === 'custom') applyCover(); else save({ profileCover: 'custom' });
+      } catch { hint.textContent = 'Не удалось сохранить файл'; }
+    };
     $('wallpaper').onchange = (e) => save({ wallpaper: e.target.value });
     // Яркость меняем на странице сразу, а в storage пишем с задержкой: у sync лимит записей в минуту
     const saveOpacity = debounce(() => save({ wallOpacity: S.wallOpacity }), 250);

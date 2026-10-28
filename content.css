@@ -1094,3 +1094,11 @@ input[type="file"][id^="fd-"][hidden] { display: none !important; }
 #fpp-update ol { margin: 6px 0; padding-left: 18px; }
 #fpp-update .fpp-upd-actions { display: flex; flex-wrap: wrap; gap: 6px; }
 @media (max-width: 480px) { #fpp-update { left: 8px; right: 8px; max-width: none; } }
+
+/* Баннер профиля: убрать или заменить своим файлом */
+html.fpp-cover-hide .profile-cover-img { background: none !important; }
+html.fpp-cover-custom .profile-cover-img { background: none !important; overflow: hidden; }
+.profile-cover-img .fpp-cover-media {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center; pointer-events: none;
+}
