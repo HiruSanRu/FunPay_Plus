@@ -349,7 +349,7 @@ html.fpp-dark .flb-profile-description-row, html.fpp-dark .flb-profile-descripti
 
 html.fpp-dark .tc, html.fpp-dark .chat, html.fpp-dark .panel, html.fpp-dark .modal-content,
 html.fpp-dark .dropdown-menu, html.fpp-dark .offer-list-title-container + *,
-html.fpp-dark .profile-data, html.fpp-dark .lot-search {
+html.fpp-dark .profile-data, html.fpp-dark .lot-search, html.fpp-dark .payment-card {
   background: rgba(16, 16, 28, 0.62) !important; backdrop-filter: blur(10px);
   border: 1px solid var(--fpp-border) !important; border-radius: 14px !important; color: var(--fpp-text) !important;
 }
