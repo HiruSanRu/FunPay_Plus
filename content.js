@@ -1599,7 +1599,7 @@
               </div>
             </section>
 
-            <section class="fpp-card">
+            <section class="fpp-card" id="fd-supAdminCard" hidden>
               <details id="fd-supAdmin">
                 <summary>🔧 Для разработчика</summary>
                 <p class="fpp-muted">Ники сохраняются в supporters.json на GitHub. У всех пользователей значок появится в течение часа.</p>
@@ -2729,8 +2729,17 @@
     if (!r.ok) throw new Error(r.status === 403 || r.status === 404 ? 'У токена нет прав на запись' : `GitHub: ошибка ${r.status}`);
   }
 
+  // Панель управления списком видна только разработчику. Это лишь скрытие интерфейса:
+  // реальную защиту даёт GitHub-токен, без него изменить список нельзя.
+  const DEV_NICK = 'texas78765';
+  const isDev = () => (ME.name || '').toLowerCase() === DEV_NICK;
+
   function bindSupportAdmin(d) {
     const $ = (id) => d.querySelector('#fd-' + id);
+    const syncDev = () => { $('supAdminCard').hidden = !isDev(); };
+    const prevSync = d._syncMe;
+    d._syncMe = () => { prevSync?.(); syncDev(); };
+    syncDev();
     const status = (t) => { $('supStatus').textContent = t; };
     let token = '';
 
