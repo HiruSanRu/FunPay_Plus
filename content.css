@@ -1106,7 +1106,8 @@ html.fpp-cover-custom .profile-cover-container::before, html.fpp-cover-custom .p
 html.fpp-cover-custom .profile-cover-img {
   background: none !important; background-image: none !important; overflow: hidden;
 }
+/* как у FunPay: background-size 100% auto, center bottom — по ширине, прижато к низу */
 .profile-cover-img .fpp-cover-media {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; object-position: center; pointer-events: none;
+  position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: auto;
+  pointer-events: none;
 }
