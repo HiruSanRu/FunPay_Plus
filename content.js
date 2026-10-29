@@ -533,7 +533,7 @@
     addEventListener('hashchange', route);
     detectMe();
     markOrderStatus();
-    markSupporters(); loadSupporters(); checkUpdate();
+    markSupporters(); loadSupporters();
     chrome.storage.local.get({ blacklist: {}, meName: '', meId: '' }, (v) => {
       S.blacklist = v.blacklist;
       // ник из прошлой сессии: нужен, пока шапка сайта ещё не отрисована
@@ -2750,70 +2750,6 @@
       const n = el.querySelector('.media-user-name')?.textContent.trim();
       el.classList.toggle('fpp-bl-contact', !!(n && bl[n]));
     });
-  }
-
-  /* =================== ПРОВЕРКА ОБНОВЛЕНИЙ =================== */
-  // Расширение ставится вручную, поэтому Chrome его не обновляет. Сравниваем свою версию
-  // с manifest.json на GitHub и показываем плашку со ссылкой на новый ZIP
-  const UPDATE_URL = 'https://raw.githubusercontent.com/HiruSanRu/FunPay_Plus/main/manifest.json';
-  const UPDATE_ZIP = 'https://github.com/HiruSanRu/FunPay_Plus/archive/refs/heads/main.zip';
-
-  const verNewer = (a, b) => {
-    const x = String(a).split('.').map(Number), y = String(b).split('.').map(Number);
-    for (let i = 0; i < Math.max(x.length, y.length); i++) {
-      if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0);
-    }
-    return false;
-  };
-
-  function checkUpdate() {
-    if (window.top !== window) return;
-    const cur = chrome.runtime.getManifest().version;
-    chrome.storage.local.get({ updLatest: '', updAt: 0, updDismissed: '' }, async (v) => {
-      let latest = v.updLatest;
-      // проверяем при каждой загрузке страницы, чтобы плашка появлялась сразу
-      {
-        try {
-          const r = await fetch(UPDATE_URL, { cache: 'no-cache' });
-          if (r.ok) {
-            latest = String((await r.json()).version || '');
-            chrome.storage.local.set({ updLatest: latest, updAt: Date.now() });
-          }
-        } catch (e) {}
-      }
-      if (latest && verNewer(latest, cur) && v.updDismissed !== latest) showUpdateBar(cur, latest);
-    });
-  }
-
-  function showUpdateBar(cur, latest) {
-    if (document.getElementById('fpp-update')) return;
-    const bar = document.createElement('div');
-    bar.id = 'fpp-update';
-    bar.setAttribute('role', 'status');
-    bar.innerHTML = `
-      <div class="fpp-upd-text">
-        <b>✦ Вышла FunPay Plus ${esc(latest)}</b> <span>у вас ${esc(cur)}</span>
-        <details>
-          <summary>Как обновить</summary>
-          <ol>
-            <li>Скачайте ZIP и распакуйте его.</li>
-            <li>Замените файлы в папке, из которой установлено расширение.</li>
-            <li>На странице расширений нажмите ↻ у FunPay Plus и обновите вкладки funpay.com.</li>
-          </ol>
-          Настройки сохранятся.
-        </details>
-      </div>
-      <div class="fpp-upd-actions">
-        <a class="fpp-btn fpp-primary" href="${UPDATE_ZIP}" target="_blank" rel="noopener">Скачать</a>
-        <button type="button" class="fpp-btn" data-a="later">Позже</button>
-        <button type="button" class="fpp-btn" data-a="skip">Пропустить версию</button>
-      </div>`;
-    bar.querySelector('[data-a="later"]').onclick = () => bar.remove();
-    bar.querySelector('[data-a="skip"]').onclick = () => {
-      chrome.storage.local.set({ updDismissed: latest });
-      bar.remove();
-    };
-    document.body.append(bar);
   }
 
   /* =================== ЗНАЧКИ ПОДДЕРЖАВШИХ =================== */
